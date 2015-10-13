@@ -19,12 +19,14 @@
     <div id="settings">
       <h3>Settings</h3>
       <form id="settingsForm">
-        <p>Delimiter:
+        <p>
+          Delimiter:
           <label><input type="radio" id="delimiterAuto" name="delimiter" value="auto" class="settingsElement" checked> Auto</label>
           <label><input type="radio" id="delimiterComma" name="delimiter" value="comma" class="settingsElement"> Comma</label>
           <label><input type="radio" id="delimiterTab" name="delimiter" value="tab" class="settingsElement"> Tab</label>
         </p>
-        <p>Decimal Sign:
+        <p>
+          Decimal Sign:
           <label><input type="radio" id="decimalDot" name="decimal" value="dot" class="settingsElement" checked> Dot</label>
           <label><input type="radio" id="decimalComma" name="decimal" value="comma" class="settingsElement"> Comma</label>
         </p>
@@ -32,7 +34,8 @@
           <label><input type="checkbox" id="headersProvidedCB" class="settingsElement" checked> First row is the header</label>
         </p>
         <div class="settingsGroup">
-          <p>Transform:
+          <p>
+            Transform:
             <label><input type="radio" id="headersNoTransform" name="headerModifications" value="none" class="settingsElement" checked> None</label>
             <label><input type="radio" id="headersDowncase" name="headerModifications" value="downcase" class="settingsElement"> Lowercase</label>
             <label><input type="radio" id="headersUpcase" name="headerModifications" value="upcase" class="settingsElement"> Uppercase</label>
@@ -42,7 +45,8 @@
           <label><input type="checkbox" id="includeWhiteSpaceCB" name="some_name" class="settingsElement" checked> Include white space in output</label>
         </p>
         <div class="settingsGroup">
-          <p>Indent with:
+          <p>
+            Indent with:
             <label><input type="radio" id="includeWhiteSpaceSpaces" name="indentType" value="spaces" class="settingsElement" checked> Spaces</label>
             <label><input type="radio" id="includeWhiteSpaceTabs" name="indentType" value="tabs" class="settingsElement"> Tabs</label>
           </p>
@@ -50,7 +54,21 @@
       </form>
     </div>
   </div>
-  <div id="converter"></div>
+  <div id="converter">
+    <div id="inputHeader" class="groupHeader">
+      <p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead">Using Excel? Simply copy and paste. No data on hand? <a href="javascript:;" id="insertSample">Use sample</a></span></p>
+    </div>
+    <textarea id="dataInput" class="textInputs" autofocus></textarea>
+    <div id="inputHeader" class="groupHeader">
+      <p class="groupHeadline">
+        Output as
+        <select id="dataSelector" name="Data Types">
+        </select>
+        <span id="outputNotes" class="subhead"></span>
+      </p>
+    </div>
+    <textarea id="dataOutput" class="textInputs"></textarea>
+  </div>
 </div>
 <!--[if lt IE 9]>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

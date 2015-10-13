@@ -82,9 +82,28 @@ padding-left:1rem;
 position:absolute;
 top:15px;
 left:330px;
+}
+#converter > * {
+display:none;
+}
+#converter:after {
+position:absolute;
+top:0;
+left:0;
+color:#fff;
+content:'Loading...';
+padding:1rem;
+}
+#converter.loaded {
 border-color:#000 #666 #666 #000;
 border-style:solid;
 border-width:2px;
+}
+#converter.loaded:after {
+content:none;
+}
+#converter.loaded > * {
+display:block;
 }
 p.dataHeaders {
 height:30px;

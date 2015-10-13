@@ -30,11 +30,13 @@ $(document).ready(function() {
 
     if (d.includeWhiteSpace) {
       $('input[name=indentType]').removeAttr('disabled');
-      var indentType = $('input[name=indentType]:checked').val();
-      if (indentType === 'tabs') {
-        d.indent = '\t';
-      } else if (indentType === 'spaces') {
-        d.indent = '  ';
+      switch ($('input[name=indentType]:checked').val()) {
+        case 'spaces':
+          d.indent = '  ';
+          break;
+        case 'tabs':
+          d.indent = '\t';
+          break;
       }
     } else {
       $('input[name=indentType]').prop('disabled', true);
@@ -44,17 +46,19 @@ $(document).ready(function() {
 
     if (d.headersProvided) {
       $('input[name=headerModifications]').removeAttr('disabled');
-
-      var hm = $('input[name=headerModifications]:checked').val();
-      if (hm === 'downcase') {
-        d.downcaseHeaders = true;
-        d.upcaseHeaders = false;
-      } else if (hm === 'upcase') {
-        d.downcaseHeaders = false;
-        d.upcaseHeaders = true;
-      } else if (hm === 'none') {
-        d.downcaseHeaders = false;
-        d.upcaseHeaders = false;
+      switch ($('input[name=headerModifications]:checked').val()) {
+        case 'none':
+          d.downcaseHeaders = false;
+          d.upcaseHeaders = false;
+          break;
+        case 'downcase':
+          d.downcaseHeaders = true;
+          d.upcaseHeaders = false;
+          break;
+        case 'upcase':
+          d.downcaseHeaders = false;
+          d.upcaseHeaders = true;
+          break;
       }
     } else {
       $('input[name=headerModifications]').prop('disabled', true);

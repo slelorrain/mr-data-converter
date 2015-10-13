@@ -6,7 +6,7 @@
 //
 //  CSV Parsing Function from Ben Nadel, http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
 
-var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
+var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   CSVParser = {
 
   //---------------------------------------
@@ -14,10 +14,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   //---------------------------------------
 
   isNumber: function(string) {
-    if (string===null || isNaN(+string)) {
-      return false;
-    }
-    return true;
+    return (!(string==='' || isNaN(+string) || /^0\d+/.test(string)));
   },
 
   //---------------------------------------
@@ -121,7 +118,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       for (var r=0; r<numRowsToTest; ++r) {
         if (dataArray[r]) {
           // Replace comma with dot if comma is decimal separator
-          if (decimalSign='comma' && isDecimal_re.test(dataArray[r][i])) {
+          if (decimalSign==='comma' && isDecimalRe.test(dataArray[r][i])) {
             dataArray[r][i] = dataArray[r][i].replace(',', '.');
           }
           if (CSVParser.isNumber(dataArray[r][i])) {

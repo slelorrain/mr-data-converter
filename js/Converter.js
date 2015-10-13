@@ -46,7 +46,7 @@ function DataConverter(nodeId) {
   this.tableName         = 'MrDataConverter';
   this.useUnderscores    = true;
   this.headersProvided   = true;
-  this.downcaseHeaders   = true;
+  this.downcaseHeaders   = false;
   this.upcaseHeaders     = false;
   this.includeWhiteSpace = true;
   this.useTabsForIndent  = false;
@@ -61,27 +61,16 @@ DataConverter.prototype.create = function(w, h) {
   var self = this;
 
   // Build HTML for converter
-  this.inputHeader = $('<div id="inputHeader" class="groupHeader"><p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead">Using Excel? Simply copy and paste. No data on hand? <a href="javascript:;" id="insertSample">Use sample</a></span></p></div>');
-  this.inputTextArea = $('<textarea id="dataInput" class="textInputs"></textarea>');
-  var outputHeaderText =
-    '<div id="inputHeader" class="groupHeader">' +
-      '<p class="groupHeadline">Output as' +
-        '<select id="dataSelector" name="Data Types">';
+  this.inputHeader = $('#inputHeader');
+  this.inputTextArea = $('#dataInput');
+  this.dataSelect = $('#dataSelector');
+  this.outputTextArea = $('#dataOutput');
+  var outputFormats = '';
   for (var i=0, imax=this.outputDataTypes.length; i<imax; ++i) {
-    outputHeaderText += '<option value="' + this.outputDataTypes[i]['id'] + '"' + (this.outputDataTypes[i]['id'] === this.outputDataType ? ' selected' : '') + '>' + this.outputDataTypes[i]['text'] + '</option>';
+    outputFormats += '<option value="' + this.outputDataTypes[i]['id'] + '"' + (this.outputDataTypes[i]['id'] === this.outputDataType ? ' selected' : '') + '>' + this.outputDataTypes[i]['text'] + '</option>';
   }
-  outputHeaderText +=
-        '</select>' +
-        '<span id="outputNotes" class="subhead"></span>' +
-      '</p>' +
-    '</div>';
-  this.outputHeader = $(outputHeaderText);
-  this.outputTextArea = $('<textarea id="dataOutput" class="textInputs"></textarea>');
-  this.node.append(this.inputHeader);
-  this.node.append(this.inputTextArea);
-  this.node.append(this.outputHeader);
-  this.node.append(this.outputTextArea);
-  this.dataSelect = this.outputHeader.find('#dataSelector');
+  this.dataSelect.append(outputFormats);
+  this.node.addClass('loaded');
 
   // Add event listeners
   //$('#convertButton').click(function(evt) {
@@ -100,7 +89,7 @@ DataConverter.prototype.create = function(w, h) {
     _gaq.push(['_trackEvent', 'SampleData', 'InsertGeneric']);
   });
 
-  $('#dataInput').on({
+  this.inputTextArea.on({
     keyup: function() {
       var $this = $(this);
       if (!$this.data('wait')) {
@@ -118,7 +107,7 @@ DataConverter.prototype.create = function(w, h) {
     }
   });
 
-  $('#dataSelector').change(function(evt) {
+  this.dataSelect.change(function(evt) {
     self.outputDataType = $(this).val();
     self.convert();
   });
@@ -155,7 +144,7 @@ DataConverter.prototype.convert = function() {
     }
 
     CSVParser.resetLog();
-    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders),
+    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders, this.decimal),
       dataGrid = parseOutput.dataGrid,
       headerNames = parseOutput.headerNames,
       headerTypes = parseOutput.headerTypes,
