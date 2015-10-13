@@ -89,7 +89,7 @@ DataConverter.prototype.create = function(w, h) {
   //  self.convert();
   //});
 
-  this.outputTextArea.click(function(evt) {
+  this.outputTextArea.add(this.inputTextArea).click(function(evt) {
     this.select();
   });
 
