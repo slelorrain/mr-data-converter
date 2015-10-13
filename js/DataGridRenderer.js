@@ -56,7 +56,7 @@ var DataGridRenderer = {
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
       for (var j=0; j<numColumns; ++j) {
-        if (headerTypes[j] === 'int' || headerTypes[j] === 'float') {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
           var rowOutput = row[j] || 'null';
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';

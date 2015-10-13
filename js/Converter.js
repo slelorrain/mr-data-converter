@@ -102,7 +102,15 @@ DataConverter.prototype.create = function(w, h) {
 
   $('#dataInput').on({
     keyup: function() {
-      self.convert();
+      var $this = $(this);
+      if (!$this.data('wait')) {
+        $this.data('wait', true);  // Prevent duplicate firing of event
+        self.convert();
+        setTimeout(function() {
+          // Reset wait state
+          $this.data('wait', false);
+        }, 500);
+      }
     },
     change: function() {
       self.convert();

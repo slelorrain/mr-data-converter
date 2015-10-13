@@ -14,7 +14,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   //---------------------------------------
 
   isNumber: function(string) {
-    if (string === null || isNaN(+string)) {
+    if (string===null || isNaN(+string)) {
       return false;
     }
     return true;
@@ -86,7 +86,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     } else { // If no headerNames provided
       // Create generic property names
       for (var i=0; i<numColumns; ++i) {
-        headerNames.push('val' + String(i));
+        headerNames.push('val' + i);
         headerTypes.push('');
       }
     }
@@ -106,7 +106,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     for (var i=0, imax=dataArray.length; i<imax; ++i) {
       var numValues = dataArray[i].length;
       if (numValues !== numColumns) {
-        this.log('Error parsing row ' + String(i) + '. Wrong number of columns.');
+        this.log('Error parsing row ' + i + '. Wrong number of columns.');
       }
     }
 
@@ -120,13 +120,13 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
       for (var r=0; r<numRowsToTest; ++r) {
         if (dataArray[r]) {
-          //replace comma with dot if comma is decimal separator
+          // Replace comma with dot if comma is decimal separator
           if (decimalSign='comma' && isDecimal_re.test(dataArray[r][i])) {
             dataArray[r][i] = dataArray[r][i].replace(',', '.');
           }
           if (CSVParser.isNumber(dataArray[r][i])) {
             ++numInts;
-            if (String(dataArray[r][i]).indexOf('.') > 0) {
+            if ((dataArray[r][i]+'').indexOf('.') > 0) {
               ++numFloats;
             }
           }
@@ -134,7 +134,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
       }
 
-      if ((numInts / numRowsToTest) > threshold) {
+      if (numInts/numRowsToTest > threshold) {
         if (numFloats > 0) {
           headerTypes[i] = 'float';
         } else {
@@ -190,7 +190,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     CSVToArray: function(strData, strDelimiter) {
       // Check to see if the delimiter is defined. If not,
       // then default to comma.
-      strDelimiter = (strDelimiter || ',');
+      strDelimiter = strDelimiter || ',';
 
       // Create a regular expression to parse the CSV values.
       var objPattern = new RegExp(
@@ -225,7 +225,7 @@ var isDecimal_re = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
         // (is not the start of string) and if it matches
         // field delimiter. If id does not, then we know
         // that this delimiter is a row delimiter.
-        if (strMatchedDelimiter.length && (strMatchedDelimiter !== strDelimiter)) {
+        if (strMatchedDelimiter.length && strMatchedDelimiter!==strDelimiter) {
           // Since we have reached a new row of data,
           // add an empty row to our data array.
           arrData.push([]);
