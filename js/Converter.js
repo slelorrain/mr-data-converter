@@ -1,5 +1,5 @@
 //
-//  converter.js
+//  Converter.js
 //  Mr-Data-Converter
 //
 //  Created by Shan Carter on 2010-09-01.
