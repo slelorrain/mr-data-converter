@@ -11,7 +11,7 @@ html {color:#000;background:#fff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p
 Mr. Data Converter styles
 ***/
 html {
-font-family:Calibri, sans-serif;
+font-family:Calibri, Helvetica, sans-serif;
 background:#141414 url('../images/background.jpg') no-repeat;
 }
 body {
@@ -46,7 +46,7 @@ text-transform:uppercase;
 }
 h1 {
 color:#dedede;
-font-family:Constantia, serif;
+font-family:Cambria, Palatino, serif;
 font-size:40px;
 line-height:40px;
 font-weight:bold;
@@ -86,7 +86,7 @@ padding:15px 15px 10px;
 background-color:#c9b7c7;
 border:none;
 color:#664d63;
-font-family:Consolas, monospace;
+font-family:Consolas, Courier New, monospace;
 font-size:12px;
 height:300px;
 line-height:18px;
