@@ -85,11 +85,8 @@ var DataGridRenderer = {
     outputText += '<table>' + newLine;
     outputText += indent + '<thead>' + newLine;
     outputText += indent + indent + '<tr>' + newLine;
-
     for (var j=0; j<numColumns; ++j) {
-      outputText += indent + indent + indent + '<th class="' + headerNames[j] + '-cell">';
-      outputText += headerNames[j];
-      outputText += '</th>' + newLine;
+      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j] + '">' + headerNames[j] + '</th>' + newLine;
     }
     outputText += indent + indent + '</tr>' + newLine;
     outputText += indent + '</thead>' + newLine;
@@ -98,15 +95,13 @@ var DataGridRenderer = {
       var row = dataGrid[i],
         rowClassName = '';
       if (i === numRows-1) {
-        rowClassName = ' class="lastRow"';
+        rowClassName = ' class="last-row"';
       } else if (i === 0) {
-        rowClassName = ' class="firstRow"';
+        rowClassName = ' class="first-row"';
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + '<td class="' + headerNames[j] + '-cell">';
-        outputText += row[j];
-        outputText += '</td>' + newLine;
+        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j] + '">' + row[j] + '</td>' + newLine;
       }
       outputText += indent + indent + '</tr>' + newLine;
     }
@@ -420,9 +415,7 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += indent + '<row>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + '<' + headerNames[j] + '>';
-        outputText += row[j] || '';
-        outputText += '</' + headerNames[j] + '>' + newLine;
+        outputText += indent + indent + '<' + headerNames[j] + '>' + (row[j]||'') + '</' + headerNames[j] + '>' + newLine;
       }
       outputText += indent + '</row>' + newLine;
     }
@@ -449,10 +442,9 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += indent + '<row ';
       for (var j=0; j<numColumns; ++j) {
-        outputText += headerNames[j] + '=';
-        outputText += '"' + row[j] + '" ';
+        outputText += headerNames[j] + '="' + row[j] + '" ';
       }
-      outputText += '></row>' + newLine;
+      outputText += '/>' + newLine;
     }
     outputText += '</rows>';
 
@@ -481,29 +473,25 @@ var DataGridRenderer = {
     outputText += indent + '<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">' + newLine;
     outputText += ']>' + newLine;
     outputText += '<svg>' + newLine;
-    outputText += '<variableSets xmlns="&ns_vars;">' + newLine;
-    outputText += indent + '<variableSet varSetName="binding1" locked="none">' + newLine;
-    outputText += indent + indent + '<variables>' + newLine;
+    outputText += indent + '<variableSets xmlns="&ns_vars;">' + newLine;
+    outputText += indent + indent + '<variableSet varSetName="binding1" locked="none">' + newLine;
+    outputText += indent + indent + indent + '<variables>' + newLine;
     for (var i=0; i<numColumns; ++i) {
-      outputText += indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
+      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
     }
-    outputText += indent + indent + '</variables>' + newLine;
-    outputText += indent + indent + '<v:sampleDataSets xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
-
+    outputText += indent + indent + indent + '</variables>' + newLine;
+    outputText += indent + indent + indent + '<v:sampleDataSets xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
-      outputText += indent + indent + indent + '<v:sampleDataSet dataSetName="' + row[0] + '">' + newLine;
+      outputText += indent + indent + indent + indent + '<v:sampleDataSet dataSetName="' + row[0] + '">' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + indent + '<' + headerNames[j] + '>' + newLine;
-        outputText += indent + indent + indent + indent + indent + '<p>' + row[j] + '</p>' + newLine;
-        outputText += indent + indent + indent + indent + '</' + headerNames[j] + '>' + newLine;
+        outputText += indent + indent + indent + indent + indent + '<' + headerNames[j] + '><p>' + row[j] + '</p></' + headerNames[j] + '>' + newLine;
       }
-      outputText += indent + indent + indent + '</v:sampleDataSet>' + newLine;
+      outputText += indent + indent + indent + indent + '</v:sampleDataSet>' + newLine;
     }
-
-    outputText += indent + indent + '</v:sampleDataSets>' + newLine;
-    outputText += indent + '</variableSet>' + newLine;
-    outputText += '</variableSets>' + newLine;
+    outputText += indent + indent + indent + '</v:sampleDataSets>' + newLine;
+    outputText += indent + indent + '</variableSet>' + newLine;
+    outputText += indent + '</variableSets>' + newLine;
     outputText += '</svg>' + newLine;
 
     return outputText;

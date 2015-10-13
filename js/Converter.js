@@ -14,7 +14,7 @@ function DataConverter(nodeId) {
   this.nodeId          = nodeId;
   this.node            = $('#' + nodeId);
   this.outputDataTypes = [
-    {'text':'Actionscript',         'id':'as',             'notes':''},
+    {'text':'ActionScript',         'id':'as',             'notes':''},
     {'text':'ASP/VBScript',         'id':'asp',            'notes':''},
     {'text':'HTML',                 'id':'html',           'notes':''},
     {'text':'JSON - Properties',    'id':'json',           'notes':''},
@@ -23,7 +23,7 @@ function DataConverter(nodeId) {
     {'text':'JSON - Dictionary',    'id':'jsonDict',       'notes':''},
     {'text':'MySQL',                'id':'mysql',          'notes':''},
     {'text':'PHP',                  'id':'php',            'notes':''},
-    {'text':'Python - Dict',        'id':'python',         'notes':''},
+    {'text':'Python - Dictionary',  'id':'python',         'notes':''},
     {'text':'Ruby',                 'id':'ruby',           'notes':''},
     {'text':'XML - Properties',     'id':'xmlProperties',  'notes':''},
     {'text':'XML - Nodes',          'id':'xml',            'notes':''},
