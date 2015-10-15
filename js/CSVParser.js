@@ -3,8 +3,6 @@
 //  Mr-Data-Converter
 //
 //  Input CSV or Tab-delimited data and this will parse it into a Data Grid Javascript object
-//
-//  CSV Parsing Function from Ben Nadel, http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
 
 var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   CSVParser = {
@@ -13,6 +11,102 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   // UTILS
   //---------------------------------------
 
+  escapeText: function(string, format) {
+    if (format==='xml') {
+      string = string.replace(/&/g, '&amp;');
+      //string = string.replace(/"/g, '&quot;');  // Already converted
+      string = string.replace(/'/g, '&apos;');
+    }
+    string = string.replace(/</g, '&lt;');
+    string = string.replace(/>/g, '&gt;');
+    // Punctuation
+    string = string.replace(/–/g, '&ndash;');
+    string = string.replace(/—/g, '&mdash;');
+    string = string.replace(/¡/g, '&iexcl;');
+    string = string.replace(/¿/g, '&iquest;');
+    string = string.replace(/“/g, '&ldquo;');
+    string = string.replace(/”/g, '&rdquo;');
+    string = string.replace(/‘/g, '&lsquo;');
+    string = string.replace(/’/g, '&rsquo;');
+    string = string.replace(/«/g, '&laquo;');
+    string = string.replace(/»/g, '&raquo;');
+    string = string.replace(/ /g, '&nbsp;');
+    // Symbols
+    string = string.replace(/¢/g, '&cent;');
+    string = string.replace(/©/g, '&copy;');
+    string = string.replace(/÷/g, '&divide;');
+    string = string.replace(/µ/g, '&micro;');
+    string = string.replace(/·/g, '&middot;');
+    string = string.replace(/¶/g, '&para;');
+    string = string.replace(/±/g, '&plusmn;');
+    string = string.replace(/€/g, '&euro;');
+    string = string.replace(/£/g, '&pound;');
+    string = string.replace(/®/g, '&reg;');
+    string = string.replace(/§/g, '&sect;');
+    string = string.replace(/™/g, '&trade;');
+    string = string.replace(/¥/g, '&yen;');
+    string = string.replace(/°/g, '&deg;');
+    // Diacritics
+    string = string.replace(/á/g, '&aacute;');
+    string = string.replace(/Á/g, '&Aacute;');
+    string = string.replace(/à/g, '&agrave;');
+    string = string.replace(/À/g, '&Agrave;');
+    string = string.replace(/â/g, '&acirc;');
+    string = string.replace(/Â/g, '&Acirc;');
+    string = string.replace(/å/g, '&aring;');
+    string = string.replace(/Å/g, '&Aring;');
+    string = string.replace(/ã/g, '&atilde;');
+    string = string.replace(/Ã/g, '&Atilde;');
+    string = string.replace(/ä/g, '&auml;');
+    string = string.replace(/Ä/g, '&Auml;');
+    string = string.replace(/æ/g, '&aelig;');
+    string = string.replace(/Æ/g, '&AElig;');
+    string = string.replace(/ç/g, '&ccedil;');
+    string = string.replace(/Ç/g, '&Ccedil;');
+    string = string.replace(/é/g, '&eacute;');
+    string = string.replace(/É/g, '&Eacute;');
+    string = string.replace(/è/g, '&egrave;');
+    string = string.replace(/È/g, '&Egrave;');
+    string = string.replace(/ê/g, '&ecirc;');
+    string = string.replace(/Ê/g, '&Ecirc;');
+    string = string.replace(/ë/g, '&euml;');
+    string = string.replace(/Ë/g, '&Euml;');
+    string = string.replace(/í/g, '&iacute;');
+    string = string.replace(/Í/g, '&Iacute;');
+    string = string.replace(/ì/g, '&igrave;');
+    string = string.replace(/Ì/g, '&Igrave;');
+    string = string.replace(/î/g, '&icirc;');
+    string = string.replace(/Î/g, '&Icirc;');
+    string = string.replace(/ï/g, '&iuml;');
+    string = string.replace(/Ï/g, '&Iuml;');
+    string = string.replace(/ñ/g, '&ntilde;');
+    string = string.replace(/Ñ/g, '&Ntilde;');
+    string = string.replace(/ó/g, '&oacute;');
+    string = string.replace(/Ó/g, '&Oacute;');
+    string = string.replace(/ò/g, '&ograve;');
+    string = string.replace(/Ò/g, '&Ograve;');
+    string = string.replace(/ô/g, '&ocirc;');
+    string = string.replace(/Ô/g, '&Ocirc;');
+    string = string.replace(/ø/g, '&oslash;');
+    string = string.replace(/Ø/g, '&Oslash;');
+    string = string.replace(/õ/g, '&otilde;');
+    string = string.replace(/Õ/g, '&Otilde;');
+    string = string.replace(/ö/g, '&ouml;');
+    string = string.replace(/Ö/g, '&Ouml;');
+    string = string.replace(/ß/g, '&szlig;');
+    string = string.replace(/ú/g, '&uacute;');
+    string = string.replace(/Ú/g, '&Uacute;');
+    string = string.replace(/ù/g, '&ugrave;');
+    string = string.replace(/Ù/g, '&Ugrave;');
+    string = string.replace(/û/g, '&ucirc;');
+    string = string.replace(/Û/g, '&Ucirc;');
+    string = string.replace(/ü/g, '&uuml;');
+    string = string.replace(/Ü/g, '&Uuml;');
+    string = string.replace(/ÿ/g, '&yuml;');
+    string = string.replace(/´/g, '&acute;');
+    string = string.replace(/`/g, '&#96;');
+    return string;
+  },
   isNumber: function(string) {
     return (!(string==='' || isNaN(+string) || /^0\d+/.test(string)));
   },
@@ -180,13 +274,14 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   // UTIL
   //---------------------------------------
 
-    // This Function from Ben Nadel, http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
-    // This will parse a delimited string into an array of
-    // arrays. The default delimiter is the comma, but this
-    // can be overriden in the second argument.
+    // This will parse a delimited string into an array of arrays. The default
+    // delimiter is the comma, but this can be overriden in the second argument.
+    //
+    // CSV Parsing Function from Ben Nadel:
+    // http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
     CSVToArray: function(strData, strDelimiter) {
-      // Check to see if the delimiter is defined. If not,
-      // then default to comma.
+      // Check to see if the delimiter is defined.
+      // If not, then default to comma.
       strDelimiter = strDelimiter || ',';
 
       // Create a regular expression to parse the CSV values.
@@ -203,45 +298,46 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
           'gi'
         );
 
-      // Create an array to hold our data. Give the array
-      // a default empty first row.
+      // Create an array to hold our data.
+      // Give the array a default empty first row.
       var arrData = [[]];
 
-      // Create an array to hold our individual pattern
-      // matching groups.
+      // Create an array to hold our individual pattern matching groups.
       var arrMatches = null;
 
-      // Keep looping over the regular expression matches
-      // until we can no longer find a match.
+      // Prepare input data for consumption by temporarily converting unescaped
+      // double quotes to HTML entities (or else this function will break)
+      var _re = /(\t|\r?\n|\r|^)([^"\t\r\n]+)"([^"]+)"/g;
+      if (_re.test(strData)) strData = strData.replace(_re, '$1$2&quot;$3&quot;');
+
+      // Keep looping over the regular expression matches until we can no longer
+      // find a match.
       while (arrMatches = objPattern.exec(strData)) {
 
         // Get the delimiter that was found.
         var strMatchedDelimiter = arrMatches[1];
 
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
+        // Check to see if the given delimiter has a length (is not the start of
+        // string) and if it matches field delimiter. If it does not, then we
+        // know that this delimiter is a row delimiter.
         if (strMatchedDelimiter.length && strMatchedDelimiter!==strDelimiter) {
-          // Since we have reached a new row of data,
-          // add an empty row to our data array.
+          // Since we have reached a new row of data, add an empty row to our
+          // data array.
           arrData.push([]);
         }
 
-        // Now that we have our delimiter out of the way,
-        // let's check to see which kind of value we
-        // captured (quoted or unquoted).
+        // Now that we have our delimiter out of the way, let's check to see
+        // which kind of value we captured (quoted or unquoted).
         if (arrMatches[2]) {
-          // We found a quoted value. When we capture
-          // this value, unescape any double quotes.
-          var strMatchedValue = arrMatches[2].replace(/""/g, '"');
+          // We found a quoted value.
+          // When we capture this value, convert it to HTML entity (THD)
+          var strMatchedValue = arrMatches[2].replace(/""/g, '&quot;');
         } else {
           // We found a non-quoted value.
           var strMatchedValue = arrMatches[3];
         }
 
-        // Now that we have our value string, let's add
-        // it to the data array.
+        // Now that we have our value string, let's add it to the data array.
         arrData[arrData.length-1].push(strMatchedValue);
       }
 

@@ -29,13 +29,16 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += (headerNames[j] + ':' + rowOutput);
+        outputText += headerNames[j].replace(/\W/g, '') + ':' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += '];';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
 
     return outputText;
   },
@@ -66,6 +69,9 @@ var DataGridRenderer = {
     }
     outputText = 'Dim myArray(' + (j-1) + ',' + (i-1) + ')' + newLine + outputText;
 
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '""');
+
     return outputText;
   },
 
@@ -86,7 +92,7 @@ var DataGridRenderer = {
     outputText += indent + '<thead>' + newLine;
     outputText += indent + indent + '<tr>' + newLine;
     for (var j=0; j<numColumns; ++j) {
-      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j] + '">' + headerNames[j] + '</th>' + newLine;
+      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j].replace(/\W/g, '') + '">' + headerNames[j] + '</th>' + newLine;
     }
     outputText += indent + indent + '</tr>' + newLine;
     outputText += indent + '</thead>' + newLine;
@@ -101,12 +107,15 @@ var DataGridRenderer = {
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j] + '">' + row[j] + '</td>' + newLine;
+        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j].replace(/\W/g, '') + '">' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
       }
       outputText += indent + indent + '</tr>' + newLine;
     }
     outputText += indent + '</tbody>' + newLine;
     outputText += '</table>';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
 
     return outputText;
   },
@@ -133,13 +142,16 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += ('"' + headerNames[j] + '"' + ':' + rowOutput);
+        outputText += '"' + headerNames[j] + '"' + ':' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += ']';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
 
     return outputText;
   },
@@ -172,6 +184,9 @@ var DataGridRenderer = {
     }
     outputText += newLine + '}';
 
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
     return outputText;
   },
 
@@ -202,6 +217,9 @@ var DataGridRenderer = {
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += newLine + ']';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
 
     return outputText;
   },
@@ -243,6 +261,9 @@ var DataGridRenderer = {
       }
     }
 
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
     return outputText;
   },
 
@@ -266,14 +287,14 @@ var DataGridRenderer = {
       if (headerTypes[j]==='int' || headerTypes[j]==='float') {
         dataType = headerTypes[j].toUpperCase();
       }
-      outputText += indent + '' + headerNames[j] + ' ' + dataType;
+      outputText += indent + '' + headerNames[j].replace(/\W/g, '') + ' ' + dataType;
       if (j < numColumns-1) outputText += ',';
       outputText += newLine;
     }
     outputText += ');' + newLine;
     outputText += 'INSERT INTO ' + tableName + ' ' + newLine + indent + '(';
     for (var j=0; j<numColumns; ++j) {
-      outputText += headerNames[j];
+      outputText += headerNames[j].replace(/\W/g, '');
       if (j < numColumns-1) outputText += ',';
     }
     outputText += ') ' + newLine + 'VALUES ' + newLine;
@@ -283,15 +304,19 @@ var DataGridRenderer = {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
           outputText += dataGrid[i][j] || 'null';
         } else {
-          outputText += '\'' + (dataGrid[i][j]||'') + '\'';
+          if (dataGrid[i][j]) dataGrid[i][j] = dataGrid[i][j].replace(/'/g, "''");  // Escape single quotes
+          else dataGrid[i][j] = '';
+          outputText += '\'' + dataGrid[i][j] + '\'';
         }
-
         if (j < numColumns-1) outputText += ',';
       }
       outputText += ')';
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += ';';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
 
     return outputText;
   },
@@ -327,6 +352,9 @@ var DataGridRenderer = {
     }
     outputText += newLine + ');';
 
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
     return outputText;
   },
 
@@ -359,6 +387,9 @@ var DataGridRenderer = {
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += '];';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
 
     return outputText;
   },
@@ -394,32 +425,8 @@ var DataGridRenderer = {
     }
     outputText += '];';
 
-    return outputText;
-  },
-
-  //---------------------------------------
-  // XML Nodes
-  //---------------------------------------
-  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
-    // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
-      numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    // Begin render loop
-    outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
-    outputText += '<rows>' + newLine;
-    for (var i=0; i<numRows; ++i) {
-      var row = dataGrid[i];
-      outputText += indent + '<row>' + newLine;
-      for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + '<' + headerNames[j] + '>' + (row[j]||'') + '</' + headerNames[j] + '>' + newLine;
-      }
-      outputText += indent + '</row>' + newLine;
-    }
-    outputText += '</rows>';
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
 
     return outputText;
   },
@@ -442,11 +449,47 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += indent + '<row ';
       for (var j=0; j<numColumns; ++j) {
-        outputText += headerNames[j] + '="' + row[j] + '" ';
+        outputText += headerNames[j].replace(/\W/g, '') + '="' + CSVParser.escapeText(row[j], 'xml') + '" ';
       }
       outputText += '/>' + newLine;
     }
     outputText += '</rows>';
+
+    // Format data
+    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // XML Nodes
+  //---------------------------------------
+  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '<!--',
+      commentLineEnd = '-->',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    outputText = '<?xml version="1.0" encoding="UTF-8"?>' + newLine;
+    outputText += '<rows>' + newLine;
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += indent + '<row>' + newLine;
+      for (var j=0; j<numColumns; ++j) {
+        if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
+        else row[j] = '';
+        headerNames[j] = headerNames[j].replace(/\W/g, '');
+        outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
+      }
+      outputText += indent + '</row>' + newLine;
+    }
+    outputText += '</rows>';
+
+    // Format data
+    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
 
     return outputText;
   },
@@ -477,7 +520,7 @@ var DataGridRenderer = {
     outputText += indent + indent + '<variableSet varSetName="binding1" locked="none">' + newLine;
     outputText += indent + indent + indent + '<variables>' + newLine;
     for (var i=0; i<numColumns; ++i) {
-      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
+      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i].replace(/\W/g, '') + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
     }
     outputText += indent + indent + indent + '</variables>' + newLine;
     outputText += indent + indent + indent + '<v:sampleDataSets xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;
@@ -485,7 +528,8 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += indent + indent + indent + indent + '<v:sampleDataSet dataSetName="' + row[0] + '">' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + indent + indent + '<' + headerNames[j] + '><p>' + row[j] + '</p></' + headerNames[j] + '>' + newLine;
+        headerNames[j] = headerNames[j].replace(/\W/g, '');
+        outputText += indent + indent + indent + indent + indent + '<' + headerNames[j] + '><p>' + CSVParser.escapeText(row[j], 'xml') + '</p></' + headerNames[j] + '>' + newLine;
       }
       outputText += indent + indent + indent + indent + '</v:sampleDataSet>' + newLine;
     }
@@ -493,6 +537,9 @@ var DataGridRenderer = {
     outputText += indent + indent + '</variableSet>' + newLine;
     outputText += indent + '</variableSets>' + newLine;
     outputText += '</svg>' + newLine;
+
+    // Format data
+    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
 
     return outputText;
   },
