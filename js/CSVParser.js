@@ -12,6 +12,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   //---------------------------------------
 
   escapeText: function(string, format) {
+    if (string===undefined) return '';
     if (format==='xml') {
       string = string.replace(/&/g, '&amp;');
       //string = string.replace(/"/g, '&quot;');  // Already converted
