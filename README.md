@@ -8,6 +8,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added auto-select on input focus.
 - [Enhancement] added "Loading..." status for right panel.
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs.
+- [Enhancement] added favicon.
 - [Enhancement] optimizations to images and code.
 - [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON.
 - [Fix] empty columns were outputted as `null` instead of `""`.
