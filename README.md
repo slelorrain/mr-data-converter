@@ -5,6 +5,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 ### Modifications to Shan Carter's version
 
+- [Enhancement] added auto-select on input focus.
 - [Enhancement] added "Loading..." status for right panel.
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs.
 - [Enhancement] optimizations to images and code.
@@ -19,3 +20,4 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 ### Future plans
 
 - Add option to format output
+- Make it responsive
