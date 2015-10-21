@@ -185,6 +185,7 @@ padding:2px 0;
 }
 
 /*** Loading Animation (Spinner) ***/
+/* Based on http://projects.lukehaas.me/css-loaders/ */
 .loader {
 position:relative;
 height:100%;

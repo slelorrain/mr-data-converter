@@ -39,7 +39,7 @@ function DataConverter(nodeId) {
 DataConverter.prototype.create = function() {
   var self = this;
 
-  // Show loader
+  // Show loader (based on http://projects.lukehaas.me/css-loaders/)
   $('#converter > .wrapper').append(
     '<div class="loader">' +
     '  <span class="loader-text">Loading...</span>' +
