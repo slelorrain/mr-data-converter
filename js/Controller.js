@@ -1,24 +1,11 @@
 var _gaq = _gaq || [];
 
 $(document).ready(function() {
-  var widthOffset = 345,
-    heightOffset = 35,
-    d = new DataConverter('converter'),
-    sidebar = $('#header'),
-    win = $(window),
-    w = win.width() - widthOffset,
-    h = win.height() - heightOffset;
+  var d = new DataConverter('converter');
 
-  d.create(w,h);
+  d.create();
 
-  $('.settingsElement').change(updateSettings);
-
-  $(window).resize(function() {
-    w = win.width() - widthOffset;
-    h = win.height() - heightOffset;
-    d.resize(w,h);
-    sidebar.height(h);
-  });
+  $('.settings-element').change(updateSettings);
 
   function updateSettings(evt) {
 

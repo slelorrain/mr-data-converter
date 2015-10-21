@@ -5,20 +5,22 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 ### Modifications to Shan Carter's version
 
-- [Enhancement] added auto-select on input focus.
-- [Enhancement] added "Loading..." status for right panel.
-- [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs.
-- [Enhancement] added favicon.
-- [Enhancement] optimizations to images and code.
-- [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON.
-- [Fix] empty columns were outputted as `null` instead of `""`.
-- [Fix] tool breaking on columns containing double quoted text when pasting directly from Excel.
-- [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator.
-- [Fix] text containing double quotes were not escaped in ASP/VBScript output.
-- [Fix] text containing apostrophes were not escaped in MySQL output.
-- [Fix] minor indentation corrections for XML output.
+- [Enhancement] added auto-select on input focus
+- [Enhancement] added input auto-focus on page load
+- [Enhancement] added "Loading..." status for right panel
+- [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
+- [Enhancement] added favicon
+- [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
+- [Enhancement] optimizations to images and code
+- [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON
+- [Fix] empty columns were outputted as `null` instead of `""`
+- [Fix] tool breaking on columns containing double quoted text when pasting directly from Excel
+- [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
+- [Fix] text containing double quotes were not escaped in ASP/VBScript output
+- [Fix] text containing apostrophes were not escaped in MySQL output
+- [Fix] minor indentation corrections for XML output
 
 ### Future plans
 
-- Add option to format output
-- Make it responsive
+- Add more output types
+- Add more formatting options for output

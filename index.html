@@ -8,68 +8,71 @@
 <meta name="description" content="I will convert your Excel data into one of several web-friendly formats, including JSON and XML.">
 <meta name="google-site-verification" content="XyXgwlcIf2zzTHcUBbZYXChfZ1a2gNTej4wO-hfBVlE">
 <link rel="stylesheet" href="css/converter.css">
-<link rel="shortcut icon" href="/mr-data-converter/favicon.ico">
+<link rel="shortcut icon" href="favicon.ico">
 </head>
 <body>
-<div id="base">
-  <div id="header">
+<div id="base" class="hbox">
+  <div id="header" class="panel">
     <div id="description">
       <h1>Mr. Data Converter</h1>
       <p>I will convert your spreadsheet data into one of several web-friendly formats.</p>
       <p>Fork me on <a href="https://github.com/thdoan/mr-data-converter">GitHub</a>.</p>
     </div>
+    <hr>
     <div id="settings">
       <h3>Settings</h3>
-      <form id="settingsForm">
+      <form id="settings-form">
         <p>
           Delimiter:
-          <label><input type="radio" id="delimiterAuto" name="delimiter" value="auto" class="settingsElement" checked> Auto</label>
-          <label><input type="radio" id="delimiterComma" name="delimiter" value="comma" class="settingsElement"> Comma</label>
-          <label><input type="radio" id="delimiterTab" name="delimiter" value="tab" class="settingsElement"> Tab</label>
+          <label><input type="radio" id="delimiterAuto" name="delimiter" value="auto" class="settings-element" checked> Auto</label>
+          <label><input type="radio" id="delimiterComma" name="delimiter" value="comma" class="settings-element"> Comma</label>
+          <label><input type="radio" id="delimiterTab" name="delimiter" value="tab" class="settings-element"> Tab</label>
         </p>
         <p>
           Decimal Sign:
-          <label><input type="radio" id="decimalDot" name="decimal" value="dot" class="settingsElement" checked> Dot</label>
-          <label><input type="radio" id="decimalComma" name="decimal" value="comma" class="settingsElement"> Comma</label>
+          <label><input type="radio" id="decimalDot" name="decimal" value="dot" class="settings-element" checked> Dot</label>
+          <label><input type="radio" id="decimalComma" name="decimal" value="comma" class="settings-element"> Comma</label>
         </p>
         <p>
-          <label><input type="checkbox" id="headersProvidedCB" class="settingsElement" checked> First row is the header</label>
+          <label><input type="checkbox" id="headersProvidedCB" class="settings-element" checked> First row is the header</label>
         </p>
-        <div class="settingsGroup">
+        <div class="settings-group">
           <p>
             Transform:
-            <label><input type="radio" id="headersNoTransform" name="headerModifications" value="none" class="settingsElement" checked> None</label>
-            <label><input type="radio" id="headersDowncase" name="headerModifications" value="downcase" class="settingsElement"> Lowercase</label>
-            <label><input type="radio" id="headersUpcase" name="headerModifications" value="upcase" class="settingsElement"> Uppercase</label>
+            <label><input type="radio" id="headersNoTransform" name="headerModifications" value="none" class="settings-element" checked> None</label>
+            <label><input type="radio" id="headersDowncase" name="headerModifications" value="downcase" class="settings-element"> Lowercase</label>
+            <label><input type="radio" id="headersUpcase" name="headerModifications" value="upcase" class="settings-element"> Uppercase</label>
           </p>
         </div>
         <p>
-          <label><input type="checkbox" id="includeWhiteSpaceCB" name="some_name" class="settingsElement" checked> Include white space in output</label>
+          <label><input type="checkbox" id="includeWhiteSpaceCB" class="settings-element" checked> Include white space in output</label>
         </p>
-        <div class="settingsGroup">
+        <div class="settings-group">
           <p>
             Indent with:
-            <label><input type="radio" id="includeWhiteSpaceSpaces" name="indentType" value="spaces" class="settingsElement" checked> Spaces</label>
-            <label><input type="radio" id="includeWhiteSpaceTabs" name="indentType" value="tabs" class="settingsElement"> Tabs</label>
+            <label><input type="radio" id="includeWhiteSpaceSpaces" name="indentType" value="spaces" class="settings-element" checked> Spaces</label>
+            <label><input type="radio" id="includeWhiteSpaceTabs" name="indentType" value="tabs" class="settings-element"> Tabs</label>
           </p>
         </div>
       </form>
     </div>
   </div>
-  <div id="converter">
-    <div id="inputHeader" class="groupHeader">
-      <p class="groupHeadline">Input CSV or tab-delimited data. <span class="subhead">Using Excel? Simply copy and paste. No data on hand? <a href="javascript:;" id="insertSample">Use sample</a></span></p>
+  <div id="converter" class="vbox panel">
+    <div class="wrapper">
+      <div id="input-header" class="group-header panel">
+        <p class="group-headline">Input CSV or tab-delimited data. <span class="subhead">Using Excel? Simply copy &amp; paste. No data on hand? <a href="javascript:;" id="insert-sample">Use sample</a></span></p>
+      </div>
+      <textarea id="data-input" class="text-input panel" autofocus></textarea>
+      <div id="output-header" class="group-header panel">
+        <p class="group-headline">
+          <label for="data-selector">Output as</label>
+          <select id="data-selector">
+          </select>
+          <!-- <span id="output-notes" class="subhead"></span> -->
+        </p>
+      </div>
+      <textarea id="data-output" class="text-input panel"></textarea>
     </div>
-    <textarea id="dataInput" class="textInputs" autofocus></textarea>
-    <div id="inputHeader" class="groupHeader">
-      <p class="groupHeadline">
-        Output as
-        <select id="dataSelector" name="Data Types">
-        </select>
-        <!-- <span id="outputNotes" class="subhead"></span> -->
-      </p>
-    </div>
-    <textarea id="dataOutput" class="textInputs"></textarea>
   </div>
 </div>
 <!--[if lt IE 9]>

@@ -32,11 +32,6 @@ function DataConverter(nodeId) {
   this.outputDataType    = 'json';
   this.columnDelimiter   = '\t';
   this.rowDelimiter      = '\n';
-  this.inputTextArea     = {};
-  this.outputTextArea    = {};
-  this.inputHeader       = {};
-  this.outputHeader      = {};
-  this.dataSelect        = {};
   this.inputText         = '';
   this.outputText        = '';
   this.newLine           = '\n';
@@ -57,14 +52,13 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function(w, h) {
+DataConverter.prototype.create = function() {
   var self = this;
 
   // Build HTML for converter
-  this.inputHeader = $('#inputHeader');
-  this.inputTextArea = $('#dataInput');
-  this.dataSelect = $('#dataSelector');
-  this.outputTextArea = $('#dataOutput');
+  this.inputTextArea = $('#data-input');
+  this.dataSelect = $('#data-selector');
+  this.outputTextArea = $('#data-output');
   var outputFormats = '';
   for (var i=0, imax=this.outputDataTypes.length; i<imax; ++i) {
     outputFormats += '<option value="' + this.outputDataTypes[i]['id'] + '"' + (this.outputDataTypes[i]['id'] === this.outputDataType ? ' selected' : '') + '>' + this.outputDataTypes[i]['text'] + '</option>';
@@ -82,7 +76,7 @@ DataConverter.prototype.create = function(w, h) {
     this.select();
   });
 
-  $('#insertSample').click(function(evt) {
+  $('#insert-sample').click(function(evt) {
     evt.preventDefault();
     self.insertSampleData();
     self.convert();
@@ -112,21 +106,6 @@ DataConverter.prototype.create = function(w, h) {
     self.convert();
   });
 
-  this.resize(w, h);
-};
-
-DataConverter.prototype.resize = function(w, h) {
-  var paneWidth = w,
-    paneHeight = (h-90)/2-20;
-  this.node.css('width', paneWidth);
-  this.inputTextArea.css({
-    width: paneWidth-20,
-    height: paneHeight
-  });
-  this.outputTextArea.css({
-    width: paneWidth-20,
-    height: paneHeight
-  });
 };
 
 DataConverter.prototype.convert = function() {
