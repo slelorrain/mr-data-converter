@@ -16,8 +16,8 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] empty columns were outputted as `null` instead of `""`
 - [Fix] tool breaking on columns containing double quoted text when pasting directly from Excel
 - [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
-- [Fix] text containing double quotes were not escaped in ASP/VBScript output
-- [Fix] text containing apostrophes were not escaped in MySQL output
+- [Fix] text containing double quotes were not escaped in ActionScript, ASP/VBScript, JSON (all types), PHP, Python, Ruby, and XML Properties output
+- [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
 - [Fix] minor indentation corrections for XML output
 
 ### Future plans

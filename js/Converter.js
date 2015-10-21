@@ -23,7 +23,7 @@ function DataConverter(nodeId) {
     {'text':'JSON - Dictionary',    'id':'jsonDict',       'notes':''},
     {'text':'MySQL',                'id':'mysql',          'notes':''},
     {'text':'PHP',                  'id':'php',            'notes':''},
-    {'text':'Python - Dictionary',  'id':'python',         'notes':''},
+    {'text':'Python',               'id':'python',         'notes':''},
     {'text':'Ruby',                 'id':'ruby',           'notes':''},
     {'text':'XML - Properties',     'id':'xmlProperties',  'notes':''},
     {'text':'XML - Nodes',          'id':'xml',            'notes':''},
