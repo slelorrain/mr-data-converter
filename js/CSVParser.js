@@ -307,9 +307,12 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       var arrMatches = null;
 
       // Prepare input data for consumption by temporarily converting unescaped
-      // double quotes to HTML entities (or else this function will break)
-      var _re = /(\t|\r?\n|\r|^)([^"\t\r\n]+)"([^"]+)"/g;
-      if (_re.test(strData)) strData = strData.replace(_re, '$1$2&quot;$3&quot;');
+      // double quotes to HTML entities (or else this function will break when
+      // pasting directly from Excel)
+      if (strDelimiter==='\t') {
+        var _re = /(\t|\r?\n|\r|^)([^"\t\r\n]+)"([^"\r\n]*)"/g;
+        if (_re.test(strData)) strData = strData.replace(_re, '$1$2&quot;$3&quot;');
+      }
 
       // Keep looping over the regular expression matches until we can no longer
       // find a match.
