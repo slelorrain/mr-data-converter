@@ -9,7 +9,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added input auto-focus on page load
 - [Enhancement] added "Loading..." status for right panel
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
-- [Enhancement] added favicon
+- [Enhancement] added favicons (mobile and desktop)
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
 - [Enhancement] optimizations to images and code
 - [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON
