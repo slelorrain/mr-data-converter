@@ -39,10 +39,16 @@ function DataConverter(nodeId) {
 DataConverter.prototype.create = function() {
   var self = this;
 
+  // Show loader
+  $('#converter > .wrapper').append(
+    '<div class="loader">' +
+    '  <span class="loader-text">Loading...</span>' +
+    '  <i class="loader-icon"></i>' +
+    '</div>');
+
   // Build HTML for converter
   this.inputTextArea = $('#data-input');
   this.outputTextArea = $('#data-output');
-  this.node.addClass('loaded');
 
   // Bind event handlers
   this.inputTextArea.add(this.outputTextArea).click(function() {
@@ -78,6 +84,10 @@ DataConverter.prototype.create = function() {
     self.outputDataType = $(this).val();
     self.convert();
   });
+
+  // Done! Clean up
+  $('.loader').remove();
+  this.node.addClass('loaded');
 
 };
 
