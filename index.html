@@ -60,12 +60,15 @@
   <div id="converter" class="vbox panel">
     <div class="wrapper">
       <div id="input-header" class="group-header panel">
-        <p class="group-headline">Input CSV or tab-delimited data. <span class="subhead">Using Excel? Simply copy &amp; paste. No data on hand? <a href="javascript:;" id="insert-sample">Use sample</a></span></p>
+        <p class="group-headline">
+          <label for="data-input">Input CSV or tab-delimited data.</label>
+          <span class="subhead">Using Excel? Simply copy &amp; paste. No data on hand? <a href="javascript:;" id="insert-sample">Use sample</a></span>
+        </p>
       </div>
       <textarea id="data-input" class="text-input panel" autofocus></textarea>
       <div id="output-header" class="group-header panel">
         <p class="group-headline">
-          <label for="data-selector">Output as</label>
+          <label for="data-output">Output as</label>
           <select id="data-selector">
           </select>
           <!-- <span id="output-notes" class="subhead"></span> -->
@@ -86,10 +89,10 @@
 <script src="js/Converter.js"></script>
 <script src="js/Controller.js"></script>
 <script>
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+var gaJsHost = (document.location.protocol==='https:') ? 'https://ssl.' : 'http://www.';
+document.write(unescape('%3Cscript src="' + gaJsHost + 'google-analytics.com/ga.js"%3E%3C/script%3E'));
 try {
-  var pageTracker = _gat._getTracker("UA-2843793-6");
+  var pageTracker = _gat._getTracker('UA-2843793-6');
   pageTracker._trackPageview();
 } catch(err) {}
 </script>
