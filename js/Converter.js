@@ -11,24 +11,8 @@ function DataConverter(nodeId) {
   // PUBLIC PROPERTIES
   //---------------------------------------
 
-  this.nodeId          = nodeId;
-  this.node            = $('#' + nodeId);
-  this.outputDataTypes = [
-    {'text':'ActionScript',         'id':'as',             'notes':''},
-    {'text':'ASP/VBScript',         'id':'asp',            'notes':''},
-    {'text':'HTML',                 'id':'html',           'notes':''},
-    {'text':'JSON - Properties',    'id':'json',           'notes':''},
-    {'text':'JSON - Column Arrays', 'id':'jsonArrayCols',  'notes':''},
-    {'text':'JSON - Row Arrays',    'id':'jsonArrayRows',  'notes':''},
-    {'text':'JSON - Dictionary',    'id':'jsonDict',       'notes':''},
-    {'text':'MySQL',                'id':'mysql',          'notes':''},
-    {'text':'PHP',                  'id':'php',            'notes':''},
-    {'text':'Python',               'id':'python',         'notes':''},
-    {'text':'Ruby',                 'id':'ruby',           'notes':''},
-    {'text':'XML - Properties',     'id':'xmlProperties',  'notes':''},
-    {'text':'XML - Nodes',          'id':'xml',            'notes':''},
-    {'text':'XML - Illustrator',    'id':'xmlIllustrator', 'notes':''}
-  ];
+  this.nodeId            = nodeId;
+  this.node              = $('#' + nodeId);
   this.outputDataType    = 'json';
   this.columnDelimiter   = '\t';
   this.rowDelimiter      = '\n';
@@ -57,22 +41,11 @@ DataConverter.prototype.create = function() {
 
   // Build HTML for converter
   this.inputTextArea = $('#data-input');
-  this.dataSelect = $('#data-selector');
   this.outputTextArea = $('#data-output');
-  var outputFormats = '';
-  for (var i=0, imax=this.outputDataTypes.length; i<imax; ++i) {
-    outputFormats += '<option value="' + this.outputDataTypes[i]['id'] + '"' + (this.outputDataTypes[i]['id'] === this.outputDataType ? ' selected' : '') + '>' + this.outputDataTypes[i]['text'] + '</option>';
-  }
-  this.dataSelect.append(outputFormats);
   this.node.addClass('loaded');
 
-  // Add event listeners
-  //$('#convertButton').click(function(evt) {
-  //  evt.preventDefault();
-  //  self.convert();
-  //});
-
-  this.outputTextArea.add(this.inputTextArea).click(function(evt) {
+  // Bind event handlers
+  this.inputTextArea.add(this.outputTextArea).click(function() {
     this.select();
   });
 
@@ -84,6 +57,10 @@ DataConverter.prototype.create = function() {
   });
 
   this.inputTextArea.on({
+    change: function() {
+      self.convert();
+      _gaq.push(['_trackEvent', 'DataType', self.outputDataType]);
+    },
     keyup: function() {
       var $this = $(this);
       if (!$this.data('wait')) {
@@ -94,14 +71,10 @@ DataConverter.prototype.create = function() {
           $this.data('wait', false);
         }, 500);
       }
-    },
-    change: function() {
-      self.convert();
-      _gaq.push(['_trackEvent', 'DataType', self.outputDataType]);
     }
   });
 
-  this.dataSelect.change(function(evt) {
+  $('#data-selector').change(function() {
     self.outputDataType = $(this).val();
     self.convert();
   });
