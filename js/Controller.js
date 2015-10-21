@@ -3,7 +3,7 @@ var _gaq = _gaq || [];
 $(document).ready(function() {
   var d = new DataConverter('converter');
 
-  d.create();
+  d.init();
 
   $('.settings-element').change(updateSettings);
 

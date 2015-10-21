@@ -36,8 +36,10 @@ function DataConverter(nodeId) {
 // PUBLIC METHODS
 //---------------------------------------
 
-DataConverter.prototype.create = function() {
+DataConverter.prototype.init = function() {
   var self = this;
+  this.inputTextArea = $('#data-input');
+  this.outputTextArea = $('#data-output');
 
   // Show loader (based on http://projects.lukehaas.me/css-loaders/)
   $('#converter > .wrapper').append(
@@ -45,10 +47,6 @@ DataConverter.prototype.create = function() {
     '  <span class="loader-text">Loading...</span>' +
     '  <i class="loader-icon"></i>' +
     '</div>');
-
-  // Build HTML for converter
-  this.inputTextArea = $('#data-input');
-  this.outputTextArea = $('#data-output');
 
   // Bind event handlers
   this.inputTextArea.add(this.outputTextArea).click(function() {
