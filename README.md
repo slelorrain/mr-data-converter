@@ -12,6 +12,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added favicons (mobile and desktop)
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
 - [Enhancement] optimizations to images and code
+- [Fix] unchecking "Include whitespace" option resulted in invalid ASP/VBScript output
 - [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON
 - [Fix] empty columns were outputted as `null` instead of `""`
 - [Fix] tool breaking on columns containing double quoted text when pasting directly from Excel

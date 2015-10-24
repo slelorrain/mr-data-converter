@@ -55,6 +55,8 @@ var DataGridRenderer = {
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
+    // This code cannot be minified
+    newLine = '\n';
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
@@ -159,6 +161,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Array of Columns
   //---------------------------------------
+
   jsonArrayCols: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '//',
@@ -193,6 +196,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Array of Rows
   //---------------------------------------
+
   jsonArrayRows: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '//',
@@ -227,6 +231,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // JSON Dictionary
   //---------------------------------------
+
   jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '//',
@@ -270,6 +275,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // MySQL
   //---------------------------------------
+
   mysql: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '/*',
@@ -324,6 +330,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // PHP
   //---------------------------------------
+
   php: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '//',
@@ -397,6 +404,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // Ruby
   //---------------------------------------
+
   ruby: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '#',
@@ -434,6 +442,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML Properties
   //---------------------------------------
+
   xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '<!--',
@@ -464,6 +473,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML Nodes
   //---------------------------------------
+
   xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '<!--',
@@ -497,6 +507,7 @@ var DataGridRenderer = {
   //---------------------------------------
   // XML Illustrator
   //---------------------------------------
+
   xmlIllustrator: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
     var commentLine = '<!--',
