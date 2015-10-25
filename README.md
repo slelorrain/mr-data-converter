@@ -5,6 +5,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 ### Modifications to Shan Carter's version
 
+- [Enhancement] added Lua output types (Dictionary Table, Array Table)
 - [Enhancement] added auto-select on input focus
 - [Enhancement] added input auto-focus on page load
 - [Enhancement] added "Loading..." status for right panel

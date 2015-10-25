@@ -239,6 +239,14 @@ var DataGridRenderer = {
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
+    function _fmtVal(i, j) {
+      if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+        return dataGrid[i][j] || 0;
+      } else {
+        return '"' + (dataGrid[i][j]||'') + '"';
+      }
+    }
+
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '"' + dataGrid[i][0] + '":';
@@ -256,6 +264,24 @@ var DataGridRenderer = {
     }
     outputText += newLine + '}';
 
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Lua Table as Dictionary
+  //---------------------------------------
+
+  luaDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '--',
+      commentLineEnd = '',
+      outputText = '{' + newLine,
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
     function _fmtVal(i, j) {
       if (headerTypes[j]==='int' || headerTypes[j]==='float') {
         return dataGrid[i][j] || 0;
@@ -263,6 +289,59 @@ var DataGridRenderer = {
         return '"' + (dataGrid[i][j]||'') + '"';
       }
     }
+
+    // Begin render loop
+    for (var i=0; i<numRows; ++i) {
+      outputText += indent + '["' + dataGrid[i][0] + '"]=';
+      if (numColumns == 2) {
+        outputText += _fmtVal(i, 1, dataGrid);
+      } else {
+        outputText += '{';
+        for (var j=1; j<numColumns; ++j) {
+          if (j > 1) outputText += ',';
+          outputText += '["' + headerNames[j] + '"]' + '=' + _fmtVal(i, j, dataGrid);
+        }
+        outputText += '}';
+      }
+      if (i < numRows-1) outputText += ',' + newLine;
+    }
+    outputText += newLine + '}';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Lua Table as Array
+  //---------------------------------------
+
+  luaArray: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '--',
+      commentLineEnd = '',
+      outputText = '{' + newLine,
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += indent + '[' + (i+1) + ']={';  // Lua has 1-based index
+      for (var j=0; j<numColumns; ++j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          var rowOutput = row[j] || 'null';
+        } else {
+          var rowOutput = '"' + (row[j]||'') + '"';
+        }
+        outputText += '["' + headerNames[j] + '"]' + '=' + rowOutput;
+        if (j < numColumns-1) outputText += ',';
+      }
+      outputText += '}';
+      if (i < numRows-1) outputText += ',' + newLine;
+    }
+    outputText += newLine + '}';
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
