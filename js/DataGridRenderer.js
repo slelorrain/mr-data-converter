@@ -55,8 +55,9 @@ var DataGridRenderer = {
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
-    // This code cannot be minified
-    newLine = '\n';
+    // By default this language has no statement terminator
+    newLine = newLine || ':';
+
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
