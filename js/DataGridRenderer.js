@@ -244,13 +244,13 @@ var DataGridRenderer = {
     // Begin render loop
     outputText += '{' + newLine;
     for (var i=0; i<numRows; ++i) {
-      outputText += indent + '"' + dataGrid[i][0] + '": ';
+      outputText += indent + '"' + dataGrid[i][0] + '":';
       if (numColumns == 2) {
         outputText += _fmtVal(i, 1, dataGrid);
       } else {
-        outputText += '{ ';
+        outputText += '{';
         for (var j=1; j<numColumns; ++j) {
-          if (j > 1) outputText += ', ';
+          if (j > 1) outputText += ',';
           outputText += '"' + headerNames[j] + '"' + ':' + _fmtVal(i, j, dataGrid);
         }
         outputText += '}';
