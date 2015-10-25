@@ -145,7 +145,7 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '"' + headerNames[j] + '"' + ':' + rowOutput;
+        outputText += '"' + headerNames[j] + '":' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
@@ -256,7 +256,7 @@ var DataGridRenderer = {
         outputText += '{';
         for (var j=1; j<numColumns; ++j) {
           if (j > 1) outputText += ',';
-          outputText += '"' + headerNames[j] + '"' + ':' + _fmtVal(i, j, dataGrid);
+          outputText += '"' + headerNames[j] + '":' + _fmtVal(i, j, dataGrid);
         }
         outputText += '}';
       }
@@ -299,7 +299,7 @@ var DataGridRenderer = {
         outputText += '{';
         for (var j=1; j<numColumns; ++j) {
           if (j > 1) outputText += ',';
-          outputText += '["' + headerNames[j] + '"]' + '=' + _fmtVal(i, j, dataGrid);
+          outputText += '["' + headerNames[j] + '"]=' + _fmtVal(i, j, dataGrid);
         }
         outputText += '}';
       }
@@ -335,7 +335,7 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '["' + headerNames[j] + '"]' + '=' + rowOutput;
+        outputText += '["' + headerNames[j] + '"]=' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
@@ -426,7 +426,7 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '"' + headerNames[j] + '"' + '=>' + rowOutput;
+        outputText += '"' + headerNames[j] + '"=>' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += ')';
@@ -462,7 +462,7 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '"' + headerNames[j] + '"' + ':' + rowOutput;
+        outputText += '"' + headerNames[j] + '":' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
@@ -498,7 +498,7 @@ var DataGridRenderer = {
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '"' + headerNames[j] + '"' + '=>' + rowOutput;
+        outputText += '"' + headerNames[j] + '"=>' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
