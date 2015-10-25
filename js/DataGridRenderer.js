@@ -167,12 +167,11 @@ var DataGridRenderer = {
     // Inits...
     var commentLine = '//',
       commentLineEnd = '',
-      outputText = '',
+      outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += '{' + newLine;
     for (var i=0; i<numColumns; ++i) {
       outputText += indent + '"' + headerNames[i] + '":[';
       for (var j=0; j<numRows; ++j) {
@@ -202,12 +201,11 @@ var DataGridRenderer = {
     // Inits...
     var commentLine = '//',
       commentLineEnd = '',
-      outputText = '',
+      outputText = '[' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += '[' + newLine;
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '[';
       for (var j=0; j<numColumns; ++j) {
@@ -237,12 +235,11 @@ var DataGridRenderer = {
     // Inits...
     var commentLine = '//',
       commentLineEnd = '',
-      outputText = '',
+      outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += '{' + newLine;
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '"' + dataGrid[i][0] + '":';
       if (numColumns == 2) {
@@ -336,13 +333,11 @@ var DataGridRenderer = {
     // Inits...
     var commentLine = '//',
       commentLineEnd = '',
-      outputText = '',
+      outputText = 'array(' + newLine,
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      tableName = 'MrDataConverter';
+      numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += 'array(' + newLine;
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
       outputText += indent + 'array(';
@@ -410,13 +405,11 @@ var DataGridRenderer = {
     // Inits...
     var commentLine = '#',
       commentLineEnd = '',
-      outputText = '',
+      outputText = '[',
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      tableName = 'MrDataConverter';
+      numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += '[';
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
       outputText += '{';
