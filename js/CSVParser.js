@@ -306,12 +306,16 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       // Create an array to hold our individual pattern matching groups.
       var arrMatches = null;
 
-      // Prepare input data for consumption by temporarily converting unescaped
-      // double quotes to HTML entities (or else this function will break when
-      // pasting directly from Excel)
+      // Handle cases where data is pasted directly from Excel
       if (strDelimiter==='\t') {
-        var _re = /(\t|\r?\n|\r|^)([^"\t\r\n]+)"([^"\r\n]*)"/g;
-        if (_re.test(strData)) strData = strData.replace(_re, '$1$2&quot;$3&quot;');
+        // First, escape tabs inside quoted fields so 2nd replacement works
+        strData = strData.replace(/(\t|\r?\n|\r|^)(".+?")([\t\n\r])/g, function(match, p1, p2, p3) {
+          return p1 + p2.replace(/\t/g, '\\t') + p3;
+        });
+        // Temporarily convert all double quotes to &quot; in unquoted fields
+        strData = strData.replace(/(\t|\r?\n|\r|^)([^\t"][^\t]+)/g, function(match, p1, p2) {
+          return p1 + p2.replace(/"/g, '&quot;');
+        });
       }
 
       // Keep looping over the regular expression matches until we can no longer
