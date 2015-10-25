@@ -15,11 +15,12 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] optimizations to images and code
 - [Fix] unchecking "Include whitespace" option resulted in invalid ASP/VBScript output
 - [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON
-- [Fix] empty columns were outputted as `null` instead of `""`
-- [Fix] tool breaking on columns containing double quoted text when pasting directly from Excel
+- [Fix] empty fields were outputted as `null` instead of `""`
+- [Fix] tool breaking on non-quoted fields containing double quotes when pasting directly from Excel
 - [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
 - [Fix] text containing double quotes were not escaped in ActionScript, ASP/VBScript, JSON (all types), PHP, Python, Ruby, and XML Properties output
 - [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
+- [Fix] invalid column headers for some output types
 - [Fix] minor indentation corrections for XML output
 
 ### Future plans

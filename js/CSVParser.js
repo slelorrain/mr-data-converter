@@ -183,13 +183,17 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       }
     }
 
-    if (upcaseHeaders) {
-      for (var i=headerNames.length-1; i>=0; --i) {
+    // Format column headers
+    for (var i=headerNames.length-1; i>=0; --i) {
+      // Trim leading and trailing spaces
+      headerNames[i] = $.trim(headerNames[i]);
+      // Convert symbols to underscores
+      headerNames[i] = headerNames[i].replace(/\W/g, '_');
+      // Convert case?
+      if (upcaseHeaders) {
         headerNames[i] = headerNames[i].toUpperCase();
       }
-    }
-    if (downcaseHeaders) {
-      for (var i=headerNames.length-1; i>=0; --i) {
+      if (downcaseHeaders) {
         headerNames[i] = headerNames[i].toLowerCase();
       }
     }
@@ -306,13 +310,13 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       // Create an array to hold our individual pattern matching groups.
       var arrMatches = null;
 
-      // Handle cases where data is pasted directly from Excel
+      // Handle cases where data is pasted directly from Excel (THD)
       if (strDelimiter==='\t') {
         // First, escape tabs inside quoted fields so 2nd replacement works
         strData = strData.replace(/(\t|\r?\n|\r|^)(".+?")([\t\n\r])/g, function(match, p1, p2, p3) {
           return p1 + p2.replace(/\t/g, '\\t') + p3;
         });
-        // Temporarily convert all double quotes to &quot; in unquoted fields
+        // Temporarily convert all double quotes to &quot; in non-quoted fields
         strData = strData.replace(/(\t|\r?\n|\r|^)([^\t"][^\t]+)/g, function(match, p1, p2) {
           return p1 + p2.replace(/"/g, '&quot;');
         });
