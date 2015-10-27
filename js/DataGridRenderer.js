@@ -8,42 +8,6 @@
 var DataGridRenderer = {
 
   //---------------------------------------
-  // ActionScript
-  //---------------------------------------
-
-  as: function(dataGrid, headerNames, headerTypes, indent, newLine) {
-    // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '[',
-      numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    // Begin render loops
-    for (var i=0; i<numRows; ++i) {
-      var row = dataGrid[i];
-      outputText += '{';
-      for (var j=0; j<numColumns; ++j) {
-        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          var rowOutput = row[j] || 'null';
-        } else {
-          var rowOutput = '"' + (row[j]||'') + '"';
-        }
-        outputText += headerNames[j].replace(/\W/g, '') + ':' + rowOutput;
-        if (j < numColumns-1) outputText += ',';
-      }
-      outputText += '}';
-      if (i < numRows-1) outputText += ',' + newLine;
-    }
-    outputText += '];';
-
-    // Format data
-    outputText = outputText.replace(/&quot;/g, '\\"');
-
-    return outputText;
-  },
-
-  //---------------------------------------
   // ASP / VBScript
   //---------------------------------------
 
