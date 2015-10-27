@@ -43,6 +43,44 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
+  // C# DataTable
+  //---------------------------------------
+
+  csharp: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '//',
+      commentLineEnd = '',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      tableName = 'MrDataConverter';
+
+    // Begin render loop
+    outputText += 'DataTable ' + tableName + ' = new DataTable();' + newLine;
+    for (var j=0; j<numColumns; ++j) {
+      outputText += tableName + '.Columns.Add("' + headerNames[j] + '", typeof(' + ((headerTypes[j]==='int' || headerTypes[j]==='float')?headerTypes[j]:'string') + '));' + newLine;
+    }
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += tableName + '.Rows.Add(';
+      for (var j=0; j<numColumns; ++j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          outputText += row[j] || 'null';
+        } else {
+          outputText += '"' + (row[j]||'') + '"';
+        }
+        if (j < numColumns-1) outputText += ', ';
+      }
+      outputText += ');' + newLine;
+    }
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
   // HTML Table
   //---------------------------------------
 
@@ -248,7 +286,7 @@ var DataGridRenderer = {
 
     function _fmtVal(i, j) {
       if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-        return dataGrid[i][j] || 0;
+        return dataGrid[i][j] || 'nil';
       } else {
         return '"' + (dataGrid[i][j]||'') + '"';
       }
@@ -295,7 +333,7 @@ var DataGridRenderer = {
       outputText += indent + '[' + (i+1) + ']={';  // Lua has 1-based index
       for (var j=0; j<numColumns; ++j) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          var rowOutput = row[j] || 'null';
+          var rowOutput = row[j] || 'nil';
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
@@ -319,8 +357,8 @@ var DataGridRenderer = {
 
   mysql: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '/*',
-      commentLineEnd = '*/',
+    var commentLine = '#',
+      commentLineEnd = '',
       outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length,
@@ -334,7 +372,7 @@ var DataGridRenderer = {
       if (headerTypes[j]==='int' || headerTypes[j]==='float') {
         dataType = headerTypes[j].toUpperCase();
       }
-      outputText += indent + '' + headerNames[j].replace(/\W/g, '') + ' ' + dataType;
+      outputText += indent + headerNames[j].replace(/\W/g, '') + ' ' + dataType;
       if (j < numColumns-1) outputText += ',';
       outputText += newLine;
     }
@@ -360,7 +398,7 @@ var DataGridRenderer = {
       outputText += ')';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ';';
+    outputText += ';' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '"');
@@ -396,7 +434,7 @@ var DataGridRenderer = {
       outputText += ')';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + ');';
+    outputText += newLine + ')';
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -432,7 +470,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += '];';
+    outputText += ']';
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -468,7 +506,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += '];';
+    outputText += ']';
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -584,7 +622,7 @@ var DataGridRenderer = {
     outputText += indent + indent + indent + '</v:sampleDataSets>' + newLine;
     outputText += indent + indent + '</variableSet>' + newLine;
     outputText += indent + '</variableSets>' + newLine;
-    outputText += '</svg>' + newLine;
+    outputText += '</svg>';
 
     // Format data
     outputText = outputText.replace(/&amp;quot;/g, '&quot;');
