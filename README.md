@@ -7,6 +7,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 - [Enhancement] added C# output type (DataTable)
 - [Enhancement] added Lua output types (Dictionary Table, Array Table)
+- [Enhancement] added Perl output type
 - [Enhancement] added auto-select on input focus
 - [Enhancement] added input auto-focus on page load
 - [Enhancement] added "Loading..." status for right panel
@@ -15,14 +16,18 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
 - [Enhancement] optimizations to images and code
 - [Enhancement] removed ActionScript output type as it was redundant with JSON Properties
+- [Enhancement] replaced 'Null' with 'Empty' in ASP / VBScript; replaced 'null' with 'undefined' in JSON
 - [Fix] unchecking "Include whitespace" option resulted in invalid ASP/VBScript output
+- [Fix] invalid column headers for some output types
+- [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
+- [Fix] floats without a leading zero were flagged as 'int'
 - [Fix] some numbers with a leading zero (e.g., Australia postal code 0800) were not quoted, which resulted in invalid JSON
 - [Fix] empty fields were outputted as `null` instead of `""`
+- [Fix] JSON Array of Columns, JSON Array of Rows, and JSON Dictionary not outputting null values
 - [Fix] tool breaking on non-quoted fields containing double quotes when pasting directly from Excel
-- [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
 - [Fix] text containing double quotes were not escaped in ActionScript, ASP/VBScript, JSON (all types), PHP, Python, Ruby, and XML Properties output
 - [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
-- [Fix] invalid column headers for some output types
+- [Fix] data comprising one empty column with header outputs nothing
 - [Fix] minor indentation corrections for XML output
 
 ### Future plans

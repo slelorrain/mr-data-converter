@@ -143,11 +143,13 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       columnDelimiter = '\t';
     }
 
-    // Kill extra empty lines
-    RE = new RegExp('^' + rowDelimiter + '+', 'gi');
-    input = input.replace(RE, '');
-    RE = new RegExp(rowDelimiter + '+$', 'gi');
-    input = input.replace(RE, '');
+    // Kill extra empty lines (if more than one column)
+    if (numCommas > 0 || numTabs > 0) {
+      RE = new RegExp('^' + rowDelimiter + '+', 'gi');
+      input = input.replace(RE, '');
+      RE = new RegExp(rowDelimiter + '+$', 'gi');
+      input = input.replace(RE, '');
+    }
 
     //var arr = input.split(rowDelimiter);
     //for (var i=0; i<arr.length; i++) {
@@ -216,8 +218,9 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       threshold = 0.9;
 
     for (var i=0, imax=headerNames.length; i<imax; ++i) {
-      var numFloats = 0,
-        numInts = 0;
+      var numStrings = 0,
+        numInts = 0,
+        numFloats = 0;
 
       for (var r=0; r<numRowsToTest; ++r) {
         if (dataArray[r]) {
@@ -227,20 +230,18 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
           }
           if (CSVParser.isNumber(dataArray[r][i])) {
             ++numInts;
-            if ((dataArray[r][i]+'').indexOf('.') > 0) {
+            if ((dataArray[r][i]+'').indexOf('.') > -1) {
               ++numFloats;
             }
+          } else if (dataArray[r][i]!=='') {
+            ++numStrings;
           }
         }
 
       }
 
-      if (numInts/numRowsToTest > threshold) {
-        if (numFloats > 0) {
-          headerTypes[i] = 'float';
-        } else {
-          headerTypes[i] = 'int';
-        }
+      if (numInts/numRowsToTest > threshold || (numStrings===0 && numInts > 0)) {
+        headerTypes[i] = (numFloats===0) ? 'int' : 'float';
       } else {
         headerTypes[i] = 'string';
       }
@@ -276,7 +277,6 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       }
       out += '\n';
     }
-
     return out;
   },
 
