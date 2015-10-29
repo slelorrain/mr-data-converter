@@ -14,9 +14,11 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
 - [Enhancement] added favicons (mobile and desktop)
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
-- [Enhancement] optimizations to images and code
-- [Enhancement] removed ActionScript output type as it was redundant with JSON Properties
+- [Enhancement] improved indentation for various output types when whitespace is enabled
 - [Enhancement] replaced 'Null' with 'Empty' in ASP / VBScript; replaced 'null' with 'undefined' in JSON
+- [Enhancement] removed 'useUnderscores' option (unused)
+- [Enhancement] removed ActionScript output type as it was redundant with JSON Properties
+- [Enhancement] compressed images and optimized code
 - [Fix] unchecking "Include whitespace" option resulted in invalid ASP/VBScript output
 - [Fix] invalid column headers for some output types
 - [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator
@@ -28,7 +30,6 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] text containing double quotes were not escaped in ActionScript, ASP/VBScript, JSON (all types), PHP, Python, Ruby, and XML Properties output
 - [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
 - [Fix] data comprising one empty column with header outputs nothing
-- [Fix] minor indentation corrections for XML output
 
 ### Future plans
 

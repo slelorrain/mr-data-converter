@@ -14,16 +14,11 @@ function DataConverter(nodeId) {
   this.nodeId            = nodeId;
   this.node              = $('#' + nodeId);
   this.outputDataType    = 'json';
-  this.columnDelimiter   = '\t';
   this.rowDelimiter      = '\n';
   this.inputText         = '';
   this.outputText        = '';
-  this.newLine           = '\n';
   this.indent            = '  ';
-  this.commentLine       = '//';
-  this.commentLineEnd    = '';
   this.tableName         = 'MrDataConverter';
-  this.useUnderscores    = true;
   this.headersProvided   = true;
   this.downcaseHeaders   = false;
   this.upcaseHeaders     = false;
@@ -91,7 +86,6 @@ DataConverter.prototype.init = function() {
 
 DataConverter.prototype.convert = function() {
   this.inputText = this.inputTextArea.val();
-  this.outputText = '';
 
   // Make sure there is input data before converting...
   if (this.inputText.length > 0) {

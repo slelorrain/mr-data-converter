@@ -52,17 +52,16 @@ var DataGridRenderer = {
       commentLineEnd = '',
       outputText = '',
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      tableName = 'MrDataConverter';
+      numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += 'DataTable ' + tableName + ' = new DataTable();' + newLine;
+    outputText += 'DataTable ' + d.tableName + ' = new DataTable();' + newLine;
     for (var j=0; j<numColumns; ++j) {
-      outputText += tableName + '.Columns.Add("' + headerNames[j] + '", typeof(' + ((headerTypes[j]==='int' || headerTypes[j]==='float')?headerTypes[j]:'string') + '));' + newLine;
+      outputText += d.tableName + '.Columns.Add("' + headerNames[j] + '", typeof(' + ((headerTypes[j]==='int' || headerTypes[j]==='float')?headerTypes[j]:'string') + '));' + newLine;
     }
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
-      outputText += tableName + '.Rows.Add(';
+      outputText += d.tableName + '.Rows.Add(';
       for (var j=0; j<numColumns; ++j) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
           outputText += row[j] || 'null';
@@ -361,11 +360,10 @@ var DataGridRenderer = {
       commentLineEnd = '',
       outputText = '',
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      tableName = 'MrDataConverter';
+      numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += 'CREATE TABLE ' + tableName + ' (' + newLine;
+    outputText += 'CREATE TABLE ' + d.tableName + ' (' + newLine;
     outputText += indent + 'id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,' + newLine;
     for (var j=0; j<numColumns; ++j) {
       var dataType = 'VARCHAR(255)';
@@ -377,7 +375,7 @@ var DataGridRenderer = {
       outputText += newLine;
     }
     outputText += ');' + newLine;
-    outputText += 'INSERT INTO ' + tableName + ' ' + newLine + indent + '(';
+    outputText += 'INSERT INTO ' + d.tableName + ' ' + newLine + indent + '(';
     for (var j=0; j<numColumns; ++j) {
       outputText += headerNames[j].replace(/\W/g, '');
       if (j < numColumns-1) outputText += ',';

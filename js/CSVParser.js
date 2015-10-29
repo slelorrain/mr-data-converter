@@ -125,14 +125,12 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     // Count the number of commas
     var RE = new RegExp('[^,]', 'gi'),
       numCommas = input.replace(RE, '').length;
-
     // Count the number of tabs
     RE = new RegExp('[^\t]', 'gi');
     var numTabs = input.replace(RE, '').length;
 
     // Set delimiter
-    var rowDelimiter = '\n',
-      columnDelimiter = ',';
+    var columnDelimiter = ',';
     if (numTabs > numCommas) {
       columnDelimiter = '\t';
     }
@@ -145,13 +143,13 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
     // Kill extra empty lines (if more than one column)
     if (numCommas > 0 || numTabs > 0) {
-      RE = new RegExp('^' + rowDelimiter + '+', 'gi');
+      RE = new RegExp('^' + d.rowDelimiter + '+', 'gi');
       input = input.replace(RE, '');
-      RE = new RegExp(rowDelimiter + '+$', 'gi');
+      RE = new RegExp(d.rowDelimiter + '+$', 'gi');
       input = input.replace(RE, '');
     }
 
-    //var arr = input.split(rowDelimiter);
+    //var arr = input.split(d.rowDelimiter);
     //for (var i=0; i<arr.length; i++) {
     //  dataArray.push(arr[i].split(columnDelimiter));
     //}

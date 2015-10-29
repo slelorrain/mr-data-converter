@@ -1,7 +1,7 @@
-var _gaq = _gaq || [];
+var _gaq = _gaq || [], d;
 
 $(document).ready(function() {
-  var d = new DataConverter('converter');
+  d = new DataConverter('converter');
 
   d.init();
 
@@ -53,7 +53,6 @@ $(document).ready(function() {
 
     d.delimiter = $('input[name=delimiter]:checked').val();
     d.decimal = $('input[name=decimal]:checked').val();
-    d.useUnderscores = true;
     d.convert();
   }
 
