@@ -1,3 +1,7 @@
+/*!
+ * Controller.js
+ */
+
 var _gaq = _gaq || [], d;
 
 $(document).ready(function() {

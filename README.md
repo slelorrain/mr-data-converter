@@ -19,6 +19,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] removed 'useUnderscores' option (unused)
 - [Enhancement] removed ActionScript output type as it was redundant with JSON Properties
 - [Enhancement] compressed images and optimized code
+- [Enhancement] JS files now combined and minified
 - [Fix] unchecking "Include whitespace" option resulted in invalid ASP/VBScript output
 - [Fix] invalid column headers for some output types
 - [Fix] column headers containing spaces resulted in invalid key name for ActionScript, incorrect class name for HTML, invalid MySQL definition, invalid attribute name for XML Properties, and invalid tag names for XML Nodes and XML Illustrator

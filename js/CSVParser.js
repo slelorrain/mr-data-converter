@@ -1,8 +1,9 @@
-//
-//  CSVParser.js
-//  Mr-Data-Converter
-//
-//  Input CSV or Tab-delimited data and this will parse it into a Data Grid Javascript object
+/*!
+ * CSVParser.js
+ * Mr-Data-Converter
+ *
+ * Input CSV or Tab-delimited data and this will parse it into a Data Grid Javascript object
+ */
 
 var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   CSVParser = {

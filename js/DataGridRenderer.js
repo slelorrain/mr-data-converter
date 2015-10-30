@@ -1,9 +1,9 @@
-//
-//  DataGridRenderer.js
-//  Part of Mr-Data-Converter
-//
-//  Created by Shan Carter on 2010-10-18.
-//
+/*!
+ * DataGridRenderer.js
+ * Part of Mr-Data-Converter
+ *
+ * Created by Shan Carter on 2010-10-18.
+ */
 
 var DataGridRenderer = {
 

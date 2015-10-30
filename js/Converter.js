@@ -1,9 +1,9 @@
-//
-//  Converter.js
-//  Mr-Data-Converter
-//
-//  Created by Shan Carter on 2010-09-01.
-//
+/*!
+ * Converter.js
+ * Mr-Data-Converter
+ *
+ * Created by Shan Carter on 2010-09-01.
+ */
 
 function DataConverter(nodeId) {
 
