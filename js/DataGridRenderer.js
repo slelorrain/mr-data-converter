@@ -96,7 +96,7 @@ var DataGridRenderer = {
     outputText += indent + '<thead>' + newLine;
     outputText += indent + indent + '<tr>' + newLine;
     for (var j=0; j<numColumns; ++j) {
-      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j].replace(/\W/g, '') + '">' + headerNames[j] + '</th>' + newLine;
+      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '">' + headerNames[j] + '</th>' + newLine;
     }
     outputText += indent + indent + '</tr>' + newLine;
     outputText += indent + '</thead>' + newLine;
@@ -111,7 +111,7 @@ var DataGridRenderer = {
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j].replace(/\W/g, '') + '">' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
+        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '">' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
       }
       outputText += indent + indent + '</tr>' + newLine;
     }
@@ -370,7 +370,7 @@ var DataGridRenderer = {
       if (headerTypes[j]==='int' || headerTypes[j]==='float') {
         dataType = headerTypes[j].toUpperCase();
       }
-      outputText += indent + headerNames[j].replace(/\W/g, '') + ' ' + dataType;
+      outputText += indent + headerNames[j] + ' ' + dataType;
       if (j < numColumns-1) outputText += ',';
       outputText += newLine;
     }
@@ -567,7 +567,7 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += indent + '<row ';
       for (var j=0; j<numColumns; ++j) {
-        outputText += headerNames[j].replace(/\W/g, '') + '="' + CSVParser.escapeText(row[j], 'xml') + '" ';
+        outputText += headerNames[j] + '="' + CSVParser.escapeText(row[j], 'xml') + '" ';
       }
       outputText += '/>' + newLine;
     }
@@ -640,7 +640,7 @@ var DataGridRenderer = {
     outputText += indent + indent + '<variableSet varSetName="binding1" locked="none">' + newLine;
     outputText += indent + indent + indent + '<variables>' + newLine;
     for (var i=0; i<numColumns; ++i) {
-      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i].replace(/\W/g, '') + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
+      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
     }
     outputText += indent + indent + indent + '</variables>' + newLine;
     outputText += indent + indent + indent + '<v:sampleDataSets xmlns:v="http://ns.adobe.com/Variables/1.0/" xmlns="http://ns.adobe.com/GenericCustomNamespace/1.0/">' + newLine;

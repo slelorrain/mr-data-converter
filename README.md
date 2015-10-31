@@ -14,6 +14,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
 - [Enhancement] added favicons (mobile and desktop)
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
+- [Enhancement] improved formatting for HTML class names
 - [Enhancement] improved indentation for various output types when whitespace is enabled
 - [Enhancement] replaced 'Null' with 'Empty' in ASP / VBScript; replaced 'null' with 'undefined' in JSON
 - [Enhancement] removed 'useUnderscores' option (unused)

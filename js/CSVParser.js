@@ -189,12 +189,11 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       // Trim leading and trailing spaces
       headerNames[i] = $.trim(headerNames[i]);
       // Strip non-alphanumeric characters
-      headerNames[i] = headerNames[i].replace(/&quot;|[^\w ]/g, '');
+      headerNames[i] = headerNames[i].replace(/[^\w -]|&quot;/g, '');
       // Convert spaces to underscores
       headerNames[i] = headerNames[i].replace(/ +/g, '_');
       // To be safe, prefix columns with leading digits
-      if (/^\d/.test(headerNames[i])) headerNames[i] = 'col' + headerNames[i];
-      headerNames[i] = headerNames[i].replace(/\W/g, '');
+      if (/^[^a-z]/i.test(headerNames[i])) headerNames[i] = 'col' + headerNames[i];
       // Convert case?
       if (upcaseHeaders) {
         headerNames[i] = headerNames[i].toUpperCase();
