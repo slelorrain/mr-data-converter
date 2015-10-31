@@ -80,6 +80,38 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
+  // ColdFusion Array of Structs
+  //---------------------------------------
+
+  cfml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '//',
+      commentLineEnd = '',
+      outputText = '[',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += '{';
+      for (var j=0; j<numColumns; ++j) {
+        var rowOutput = '"' + (row[j]||'') + '"';  // ColdFusion has no null value
+        outputText += '"' + headerNames[j] + '"=' + rowOutput;
+        if (j < numColumns-1) outputText += ',';
+      }
+      outputText += '}';
+      if (i < numRows-1) outputText += ',' + newLine;
+    }
+    outputText += ']';
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
   // HTML Table
   //---------------------------------------
 
