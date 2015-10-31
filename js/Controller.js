@@ -2,7 +2,7 @@
  * Controller.js
  */
 
-var _gaq = _gaq || [], d;
+var d;
 
 $(document).ready(function() {
   d = new DataConverter('converter');
@@ -13,9 +13,7 @@ $(document).ready(function() {
 
   function updateSettings(evt) {
 
-    if (evt) {
-      _gaq.push(['_trackEvent', 'Settings', evt.currentTarget.id]);
-    }
+    if (evt) ga('send', 'event', 'Settings', evt.currentTarget.id);
 
     d.includeWhiteSpace = $('#includeWhiteSpaceCB').prop('checked');
 

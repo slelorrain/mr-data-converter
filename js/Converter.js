@@ -52,13 +52,13 @@ DataConverter.prototype.init = function() {
     evt.preventDefault();
     self.insertSampleData();
     self.convert();
-    _gaq.push(['_trackEvent', 'SampleData', 'InsertGeneric']);
+    ga('send', 'event', 'SampleData', 'InsertGeneric');
   });
 
   this.inputTextArea.on({
     change: function() {
       self.convert();
-      _gaq.push(['_trackEvent', 'DataType', self.outputDataType]);
+      ga('send', 'event', 'DataType', self.outputDataType);
     },
     keyup: function() {
       var $this = $(this);
