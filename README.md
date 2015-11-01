@@ -7,6 +7,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 - [Enhancement] added C# output type (DataTable)
 - [Enhancement] added ColdFusion output type
+- [Enhancement] added Go output type
 - [Enhancement] added Lua output types (Dictionary Table, Array Table)
 - [Enhancement] added Perl output type
 - [Enhancement] added auto-select on input focus
