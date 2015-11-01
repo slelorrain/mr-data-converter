@@ -35,6 +35,7 @@ DataConverter.prototype.init = function() {
   var self = this;
   this.inputTextArea = $('#data-input');
   this.outputTextArea = $('#data-output');
+  this.dataSelector = $('#data-selector');
 
   // Show loader (based on http://projects.lukehaas.me/css-loaders/)
   $('#converter > .wrapper').append(
@@ -42,6 +43,12 @@ DataConverter.prototype.init = function() {
     '  <span class="loader-text">Loading...</span>' +
     '  <i class="loader-icon"></i>' +
     '</div>');
+
+  // Re-convert if arriving from Back button
+  if (this.outputTextArea.val()) {
+    self.outputDataType = this.dataSelector.children('option:selected').val();
+    self.convert();
+  }
 
   // Bind event handlers
   this.inputTextArea.add(this.outputTextArea).click(function() {
@@ -73,7 +80,7 @@ DataConverter.prototype.init = function() {
     }
   });
 
-  $('#data-selector').change(function() {
+  this.dataSelector.change(function() {
     self.outputDataType = $(this).val();
     self.convert();
   });

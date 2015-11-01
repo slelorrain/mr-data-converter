@@ -34,6 +34,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] text containing double quotes were not escaped in ActionScript, ASP/VBScript, JSON (all types), PHP, Python, Ruby, and XML Properties output
 - [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
 - [Fix] data comprising one empty column with header outputs nothing
+- [Fix] wrong output when arriving after hitting Back button
 
 ### Future plans
 
