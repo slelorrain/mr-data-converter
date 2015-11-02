@@ -112,6 +112,15 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   isNumber: function(string) {
     return (!(string==='' || isNaN(+string) || /^0\d+/.test(string)));
   },
+  repeat: function(pattern, count) {
+    if (count < 1) return '';
+    var result = '';
+    while (count > 1) {
+      if (count & 1) result += pattern;
+      count >>= 1, pattern += pattern;
+    }
+    return result + pattern;
+  },
 
   //---------------------------------------
   // PARSE

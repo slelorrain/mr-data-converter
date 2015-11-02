@@ -83,6 +83,7 @@ DataConverter.prototype.init = function() {
   this.dataSelector.change(function() {
     self.outputDataType = $(this).val();
     self.convert();
+    self.outputTextArea.select();
   });
 
   // Done! Clean up

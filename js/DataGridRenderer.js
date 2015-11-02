@@ -96,7 +96,11 @@ var DataGridRenderer = {
       var row = dataGrid[i];
       outputText += '{';
       for (var j=0; j<numColumns; ++j) {
-        var rowOutput = '"' + (row[j]||'') + '"';  // ColdFusion has no null value
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          var rowOutput = row[j] || '""';  // ColdFusion has no null value
+        } else {
+          var rowOutput = '"' + (row[j]||'') + '"';
+        }
         outputText += '"' + headerNames[j] + '"=' + rowOutput;
         if (j < numColumns-1) outputText += ',';
       }
@@ -125,9 +129,9 @@ var DataGridRenderer = {
 
     // Begin render loop
     outputText += 'type rows struct{';
-    for (var i=0; i<numColumns; ++i) {
-      outputText += headerNames[i] + ' ' + ((headerTypes[i]==='int' || headerTypes[i]==='float')?headerTypes[i]+'64':'string');
-      if (i < numColumns-1) outputText += '; ';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += headerNames[j] + ' ' + ((headerTypes[j]==='int' || headerTypes[j]==='float')?headerTypes[j]+'64':'string');
+      if (j < numColumns-1) outputText += '; ';
     }
     outputText +=
       '}' + (newLine||';') +
@@ -250,18 +254,18 @@ var DataGridRenderer = {
       numColumns = headerNames.length;
 
     // Begin render loop
-    for (var i=0; i<numColumns; ++i) {
-      outputText += indent + '"' + headerNames[i] + '":[';
-      for (var j=0; j<numRows; ++j) {
-        if (headerTypes[i]==='int' || headerTypes[i]==='float') {
-          outputText += dataGrid[j][i] || 'undefined';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += indent + '"' + headerNames[j] + '":[';
+      for (var i=0; i<numRows; ++i) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          outputText += dataGrid[i][j] || 'undefined';
         } else {
-          outputText += '"' + (dataGrid[j][i]||'') + '"';
+          outputText += '"' + (dataGrid[i][j]||'') + '"';
         }
-        if (j < numRows-1) outputText += ',';
+        if (i < numRows-1) outputText += ',';
       }
       outputText += ']';
-      if (i < numColumns-1) outputText += ',' + newLine;
+      if (j < numColumns-1) outputText += ',' + newLine;
     }
     outputText += newLine + '}' + newLine;
 
@@ -315,15 +319,14 @@ var DataGridRenderer = {
       commentLineEnd = '',
       outputText = '{' + newLine,
       numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    function _fmtVal(i, j) {
-      if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-        return dataGrid[i][j] || 'undefined';
-      } else {
-        return '"' + (dataGrid[i][j]||'') + '"';
-      }
-    }
+      numColumns = headerNames.length,
+      _fmtVal = function(i, j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          return dataGrid[i][j] || 'undefined';
+        } else {
+          return '"' + (dataGrid[i][j]||'') + '"';
+        }
+      };
 
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
@@ -358,15 +361,14 @@ var DataGridRenderer = {
       commentLineEnd = '',
       outputText = '{' + newLine,
       numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    function _fmtVal(i, j) {
-      if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-        return dataGrid[i][j] || 'nil';
-      } else {
-        return '"' + (dataGrid[i][j]||'') + '"';
-      }
-    }
+      numColumns = headerNames.length,
+      _fmtVal = function(i, j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          return dataGrid[i][j] || 'nil';
+        } else {
+          return '"' + (dataGrid[i][j]||'') + '"';
+        }
+      };
 
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
@@ -423,6 +425,44 @@ var DataGridRenderer = {
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Markdown Table
+  //---------------------------------------
+
+  markdown: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '<!---',  /* pandoc ignores HTML comments with three dashes */
+      commentLineEnd = '--->',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      headerLengths = [];
+
+    // Begin render loop
+    outputText += '|';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += ' ' + headerNames[j] + ' |';
+      headerLengths.push((headerNames[j].length+2) + ((headerTypes[j]==='int' || headerTypes[j]==='float')?'r':''));
+    }
+    outputText += newLine + '|';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += ((headerLengths[j].indexOf('r')<0) ? CSVParser.repeat('-', headerLengths[j]) : CSVParser.repeat('-', parseInt(headerLengths[j])-1) + ':') + '|';
+    }
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += newLine + '|';
+      for (var j=0; j<numColumns; ++j) {
+        outputText += ' ' + CSVParser.escapeText(row[j]).replace(/\|/g, '&#124;') + ' |';
+      }
+    }
+    outputText += newLine;
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
 
     return outputText;
   },
@@ -760,8 +800,8 @@ var DataGridRenderer = {
       indent + '<variableSets xmlns="&ns_vars;">' + newLine +
       indent + indent + '<variableSet varSetName="binding1" locked="none">' + newLine +
       indent + indent + indent + '<variables>' + newLine;
-    for (var i=0; i<numColumns; ++i) {
-      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[i] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
+    for (var j=0; j<numColumns; ++j) {
+      outputText += indent + indent + indent + indent + '<variable varName="' + headerNames[j] + '" trait="textcontent" category="&ns_flows;"></variable>' + newLine;
     }
     outputText +=
       indent + indent + indent + '</variables>' + newLine +

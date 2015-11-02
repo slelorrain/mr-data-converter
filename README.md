@@ -9,10 +9,12 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added ColdFusion output type
 - [Enhancement] added Go output type
 - [Enhancement] added Lua output types (Dictionary Table, Array Table)
+- [Enhancement] added Markdown output type
 - [Enhancement] added Perl output type
 - [Enhancement] added Wiki output type
 - [Enhancement] added auto-select on input focus
 - [Enhancement] added input auto-focus on page load
+- [Enhancement] added output auto-select on menu selection (conversion)
 - [Enhancement] added "Loading..." status for right panel
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
 - [Enhancement] added favicons (mobile and desktop)
