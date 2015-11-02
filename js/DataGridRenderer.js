@@ -103,7 +103,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ']';
+    outputText += ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -193,7 +193,7 @@ var DataGridRenderer = {
     }
     outputText +=
       indent + '</tbody>' + newLine +
-      '</table>';
+      '</table>' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '"');
@@ -229,7 +229,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ']';
+    outputText += ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -263,7 +263,7 @@ var DataGridRenderer = {
       outputText += ']';
       if (i < numColumns-1) outputText += ',' + newLine;
     }
-    outputText += newLine + '}';
+    outputText += newLine + '}' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -297,7 +297,7 @@ var DataGridRenderer = {
       outputText += ']';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + ']';
+    outputText += newLine + ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -340,7 +340,7 @@ var DataGridRenderer = {
       }
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + '}';
+    outputText += newLine + '}' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -383,7 +383,7 @@ var DataGridRenderer = {
       }
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + '}';
+    outputText += newLine + '}' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -419,7 +419,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + '}';
+    outputText += newLine + '}' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -512,7 +512,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ')';
+    outputText += ')' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -548,7 +548,7 @@ var DataGridRenderer = {
       outputText += ')';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + ')';
+    outputText += newLine + ')' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -584,7 +584,7 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ']';
+    outputText += ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -620,10 +620,48 @@ var DataGridRenderer = {
       outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += ']';
+    outputText += ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Wiki Table
+  //---------------------------------------
+
+  wiki: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '<!--',
+      commentLineEnd = '-->',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    outputText +=
+      '{| class="wikitable"' + newLine +
+      '! ';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += 'scope="col" | ' + headerNames[j];
+      if (j < numColumns-1) outputText += ' || ';
+    }
+    outputText += newLine + '|-' + newLine;
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += '| ';
+      for (var j=0; j<numColumns; ++j) {
+        outputText += ((headerTypes[j]==='int' || headerTypes[j]==='float')?'style="text-align:right" | ':'') + CSVParser.escapeText(row[j]).replace(/\|/g, '&#124;');
+        if (j < numColumns-1) outputText += ' || ';
+      }
+      if (i < numRows-1) outputText += newLine + '|-' + newLine;
+    }
+    outputText += newLine + '|}' + newLine;
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
 
     return outputText;
   },
@@ -652,7 +690,7 @@ var DataGridRenderer = {
       }
       outputText += '/>' + newLine;
     }
-    outputText += '</rows>';
+    outputText += '</rows>' + newLine;
 
     // Format data
     outputText = outputText.replace(/&amp;quot;/g, '&quot;');
@@ -687,7 +725,7 @@ var DataGridRenderer = {
       }
       outputText += indent + '</row>' + newLine;
     }
-    outputText += '</rows>';
+    outputText += '</rows>' + newLine;
 
     // Format data
     outputText = outputText.replace(/&amp;quot;/g, '&quot;');
@@ -741,7 +779,7 @@ var DataGridRenderer = {
       indent + indent + indent + '</v:sampleDataSets>' + newLine +
       indent + indent + '</variableSet>' + newLine +
       indent + '</variableSets>' + newLine +
-      '</svg>';
+      '</svg>' + newLine;
 
     // Format data
     outputText = outputText.replace(/&amp;quot;/g, '&quot;');
