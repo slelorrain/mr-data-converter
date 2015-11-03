@@ -827,4 +827,33 @@ var DataGridRenderer = {
     return outputText;
   },
 
+  //---------------------------------------
+  // YAML
+  //---------------------------------------
+
+  yaml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '#',
+      commentLineEnd = '',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      headerMaxLength = headerNames.sort(function(a, b) {
+        return b.length - a.length;
+      })[0].length;
+
+    // Begin render loop
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      for (var j=0; j<numColumns; ++j) {
+        outputText += ((j>0)?'  ':'- ') + headerNames[j] + ': ' + CSVParser.repeat(' ', headerMaxLength-headerNames[j].length) + (row[j]||'') + newLine;
+      }
+    }
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
+
+    return outputText;
+  },
+
 };
