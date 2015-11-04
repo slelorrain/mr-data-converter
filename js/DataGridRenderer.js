@@ -184,9 +184,9 @@ var DataGridRenderer = {
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i],
         rowClassName = '';
-      if (i === numRows-1) {
+      if (i===numRows-1) {
         rowClassName = ' class="last-row"';
-      } else if (i === 0) {
+      } else if (i===0) {
         rowClassName = ' class="first-row"';
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
@@ -331,7 +331,7 @@ var DataGridRenderer = {
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '"' + dataGrid[i][0] + '":';
-      if (numColumns === 2) {
+      if (numColumns===2) {
         outputText += _fmtVal(i, 1);
       } else {
         outputText += '{';
@@ -373,7 +373,7 @@ var DataGridRenderer = {
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '["' + dataGrid[i][0] + '"]=';
-      if (numColumns === 2) {
+      if (numColumns===2) {
         outputText += _fmtVal(i, 1);
       } else {
         outputText += '{';
@@ -628,6 +628,46 @@ var DataGridRenderer = {
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Rich Text Format (RTF) Table
+  //---------------------------------------
+
+  rtf: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '',
+      commentLineEnd = '',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      rowDefinition = '',
+      twips = Math.round(9000/numColumns),  /* 9000 twips fit inside A4 document with 1" margins */
+      border = '\\clbrdrt\\brdrs\\clbrdrl\\brdrs\\clbrdrb\\brdrs\\clbrdrr\\brdrs';
+
+    // Begin render loop
+    outputText += '\\trowd\\trgaph144';  // Horizontal gap of 144 twips = 0.1" left/right margins
+    for (var j=0; j<numColumns; ++j) {
+      outputText += border + '\\cellx' + twips*(j+1);
+    }
+    rowDefinition = outputText;
+    for (var j=0; j<numColumns; ++j) {
+      outputText += '\\pard\\intbl\\qc\\b{' + headerNames[j] + '}\\cell'
+    }
+    outputText += '\\row' + newLine;
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += rowDefinition;
+      for (var j=0; j<numColumns; ++j) {
+        outputText += '\\pard\\intbl' + ((headerTypes[j]==='int' || headerTypes[j]==='float')?'\\qr':'') + '\\plain{' + CSVParser.escapeText(row[j], 'rtf') + '}\\cell';
+      }
+      outputText += '\\row' + newLine;
+    }
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
 
     return outputText;
   },

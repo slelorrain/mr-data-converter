@@ -14,99 +14,127 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
   escapeText: function(string, format) {
     if (string===undefined) return '';
+    if (format===undefined) format = 'html';
     if (format==='xml') {
-      string = string.replace(/&/g, '&amp;');
+      string = string.replace(/&/g, '&amp;');  // This needs to be first
       //string = string.replace(/"/g, '&quot;');  // Already converted
       string = string.replace(/'/g, '&apos;');
     }
-    string = string.replace(/</g, '&lt;');
-    string = string.replace(/>/g, '&gt;');
-    // Punctuation
-    string = string.replace(/–/g, '&ndash;');
-    string = string.replace(/—/g, '&mdash;');
-    string = string.replace(/¡/g, '&iexcl;');
-    string = string.replace(/¿/g, '&iquest;');
-    string = string.replace(/“/g, '&ldquo;');
-    string = string.replace(/”/g, '&rdquo;');
-    string = string.replace(/‘/g, '&lsquo;');
-    string = string.replace(/’/g, '&rsquo;');
-    string = string.replace(/«/g, '&laquo;');
-    string = string.replace(/»/g, '&raquo;');
-    string = string.replace(/ /g, '&nbsp;');
-    // Symbols
-    string = string.replace(/¢/g, '&cent;');
-    string = string.replace(/©/g, '&copy;');
-    string = string.replace(/÷/g, '&divide;');
-    string = string.replace(/µ/g, '&micro;');
-    string = string.replace(/·/g, '&middot;');
-    string = string.replace(/¶/g, '&para;');
-    string = string.replace(/±/g, '&plusmn;');
-    string = string.replace(/€/g, '&euro;');
-    string = string.replace(/£/g, '&pound;');
-    string = string.replace(/®/g, '&reg;');
-    string = string.replace(/§/g, '&sect;');
-    string = string.replace(/™/g, '&trade;');
-    string = string.replace(/¥/g, '&yen;');
-    string = string.replace(/°/g, '&deg;');
-    // Diacritics
-    string = string.replace(/á/g, '&aacute;');
-    string = string.replace(/Á/g, '&Aacute;');
-    string = string.replace(/à/g, '&agrave;');
-    string = string.replace(/À/g, '&Agrave;');
-    string = string.replace(/â/g, '&acirc;');
-    string = string.replace(/Â/g, '&Acirc;');
-    string = string.replace(/å/g, '&aring;');
-    string = string.replace(/Å/g, '&Aring;');
-    string = string.replace(/ã/g, '&atilde;');
-    string = string.replace(/Ã/g, '&Atilde;');
-    string = string.replace(/ä/g, '&auml;');
-    string = string.replace(/Ä/g, '&Auml;');
-    string = string.replace(/æ/g, '&aelig;');
-    string = string.replace(/Æ/g, '&AElig;');
-    string = string.replace(/ç/g, '&ccedil;');
-    string = string.replace(/Ç/g, '&Ccedil;');
-    string = string.replace(/é/g, '&eacute;');
-    string = string.replace(/É/g, '&Eacute;');
-    string = string.replace(/è/g, '&egrave;');
-    string = string.replace(/È/g, '&Egrave;');
-    string = string.replace(/ê/g, '&ecirc;');
-    string = string.replace(/Ê/g, '&Ecirc;');
-    string = string.replace(/ë/g, '&euml;');
-    string = string.replace(/Ë/g, '&Euml;');
-    string = string.replace(/í/g, '&iacute;');
-    string = string.replace(/Í/g, '&Iacute;');
-    string = string.replace(/ì/g, '&igrave;');
-    string = string.replace(/Ì/g, '&Igrave;');
-    string = string.replace(/î/g, '&icirc;');
-    string = string.replace(/Î/g, '&Icirc;');
-    string = string.replace(/ï/g, '&iuml;');
-    string = string.replace(/Ï/g, '&Iuml;');
-    string = string.replace(/ñ/g, '&ntilde;');
-    string = string.replace(/Ñ/g, '&Ntilde;');
-    string = string.replace(/ó/g, '&oacute;');
-    string = string.replace(/Ó/g, '&Oacute;');
-    string = string.replace(/ò/g, '&ograve;');
-    string = string.replace(/Ò/g, '&Ograve;');
-    string = string.replace(/ô/g, '&ocirc;');
-    string = string.replace(/Ô/g, '&Ocirc;');
-    string = string.replace(/ø/g, '&oslash;');
-    string = string.replace(/Ø/g, '&Oslash;');
-    string = string.replace(/õ/g, '&otilde;');
-    string = string.replace(/Õ/g, '&Otilde;');
-    string = string.replace(/ö/g, '&ouml;');
-    string = string.replace(/Ö/g, '&Ouml;');
-    string = string.replace(/ß/g, '&szlig;');
-    string = string.replace(/ú/g, '&uacute;');
-    string = string.replace(/Ú/g, '&Uacute;');
-    string = string.replace(/ù/g, '&ugrave;');
-    string = string.replace(/Ù/g, '&Ugrave;');
-    string = string.replace(/û/g, '&ucirc;');
-    string = string.replace(/Û/g, '&Ucirc;');
-    string = string.replace(/ü/g, '&uuml;');
-    string = string.replace(/Ü/g, '&Uuml;');
-    string = string.replace(/ÿ/g, '&yuml;');
-    string = string.replace(/´/g, '&acute;');
-    string = string.replace(/`/g, '&#96;');
+    if (format==='rtf') {
+      string = string.replace(/\\/g, '\\\'5c');  // This needs to be first
+      string = string.replace(/\{/g, '\\\'7b');
+      string = string.replace(/\}/g, '\\\'7d');
+      string = string.replace(/~/g, '\\\'98');
+    } else {
+      string = string.replace(/</g, '&lt;');
+      string = string.replace(/>/g, '&gt;');
+    }
+    // Common punctuation
+    string = string.replace(/…/g, (format==='rtf')?'\\\'85':'&hellip;');
+    string = string.replace(/‘/g, (format==='rtf')?'\\\'91':'&lsquo;');
+    string = string.replace(/’/g, (format==='rtf')?'\\\'92':'&rsquo;');
+    string = string.replace(/“/g, (format==='rtf')?'\\\'93':'&ldquo;');
+    string = string.replace(/”/g, (format==='rtf')?'\\\'94':'&rdquo;');
+    string = string.replace(/–/g, (format==='rtf')?'\\\'96':'&ndash;');
+    string = string.replace(/—/g, (format==='rtf')?'\\\'97':'&mdash;');
+    string = string.replace(/‹/g, (format==='rtf')?'\\\'8b':'&lsaquo;');
+    string = string.replace(/›/g, (format==='rtf')?'\\\'9b':'&rsaquo;');
+    string = string.replace(/«/g, (format==='rtf')?'\\\'ab':'&laquo;');
+    string = string.replace(/»/g, (format==='rtf')?'\\\'bb':'&raquo;');
+    string = string.replace(/¡/g, (format==='rtf')?'\\\'a1':'&iexcl;');
+    string = string.replace(/¿/g, (format==='rtf')?'\\\'bf':'&iquest;');
+    string = string.replace(/ /g, (format==='rtf')?'\\~':'&nbsp;');
+    // Common symbols
+    string = string.replace(/€/g, (format==='rtf')?'\\\'80':'&euro;');
+    string = string.replace(/†/g, (format==='rtf')?'\\\'86':'&dagger;');
+    string = string.replace(/‡/g, (format==='rtf')?'\\\'87':'&Dagger;');
+    string = string.replace(/•/g, (format==='rtf')?'\\\'95':'&bull;');
+    string = string.replace(/™/g, (format==='rtf')?'\\\'99':'&trade;');
+    string = string.replace(/¢/g, (format==='rtf')?'\\\'a2':'&cent;');
+    string = string.replace(/£/g, (format==='rtf')?'\\\'a3':'&pound;');
+    string = string.replace(/¤/g, (format==='rtf')?'\\\'a4':'&curren;');
+    string = string.replace(/¥/g, (format==='rtf')?'\\\'a5':'&yen;');
+    string = string.replace(/§/g, (format==='rtf')?'\\\'a7':'&sect;');
+    string = string.replace(/©/g, (format==='rtf')?'\\\'a9':'&copy;');
+    string = string.replace(/®/g, (format==='rtf')?'\\\'ae':'&reg;');
+    string = string.replace(/°/g, (format==='rtf')?'\\\'b0':'&deg;');
+    string = string.replace(/±/g, (format==='rtf')?'\\\'b1':'&plusmn;');
+    string = string.replace(/²/g, (format==='rtf')?'\\\'b2':'&sup2;');
+    string = string.replace(/³/g, (format==='rtf')?'\\\'b3':'&sup3;');
+    string = string.replace(/µ/g, (format==='rtf')?'\\\'b5':'&micro;');
+    string = string.replace(/¶/g, (format==='rtf')?'\\\'b6':'&para;');
+    string = string.replace(/·/g, (format==='rtf')?'\\\'b7':'&middot;');
+    string = string.replace(/¼/g, (format==='rtf')?'\\\'bc':'&frac14;');
+    string = string.replace(/½/g, (format==='rtf')?'\\\'bd':'&frac12;');
+    string = string.replace(/¾/g, (format==='rtf')?'\\\'be':'&frac34;');
+    string = string.replace(/×/g, (format==='rtf')?'\\\'d7':'&times;');
+    string = string.replace(/÷/g, (format==='rtf')?'\\\'f7':'&divide;');
+    // Common diacritics
+    string = string.replace(/á/g, (format==='rtf')?'\\\'e1':'&aacute;');
+    string = string.replace(/Á/g, (format==='rtf')?'\\\'c1':'&Aacute;');
+    string = string.replace(/à/g, (format==='rtf')?'\\\'e0':'&agrave;');
+    string = string.replace(/À/g, (format==='rtf')?'\\\'c0':'&Agrave;');
+    string = string.replace(/â/g, (format==='rtf')?'\\\'e2':'&acirc;');
+    string = string.replace(/Â/g, (format==='rtf')?'\\\'c2':'&Acirc;');
+    string = string.replace(/ä/g, (format==='rtf')?'\\\'e4':'&auml;');
+    string = string.replace(/Ä/g, (format==='rtf')?'\\\'c4':'&Auml;');
+    string = string.replace(/ã/g, (format==='rtf')?'\\\'e3':'&atilde;');
+    string = string.replace(/Ã/g, (format==='rtf')?'\\\'c3':'&Atilde;');
+    string = string.replace(/å/g, (format==='rtf')?'\\\'e5':'&aring;');
+    string = string.replace(/Å/g, (format==='rtf')?'\\\'c5':'&Aring;');
+    string = string.replace(/æ/g, (format==='rtf')?'\\\'e6':'&aelig;');
+    string = string.replace(/Æ/g, (format==='rtf')?'\\\'c6':'&AElig;');
+    string = string.replace(/ç/g, (format==='rtf')?'\\\'e7':'&ccedil;');
+    string = string.replace(/Ç/g, (format==='rtf')?'\\\'c7':'&Ccedil;');
+    string = string.replace(/ð/g, (format==='rtf')?'\\\'f0':'&eth;');
+    string = string.replace(/Ð/g, (format==='rtf')?'\\\'d0':'&ETH;');
+    string = string.replace(/é/g, (format==='rtf')?'\\\'e9':'&eacute;');
+    string = string.replace(/É/g, (format==='rtf')?'\\\'c9':'&Eacute;');
+    string = string.replace(/è/g, (format==='rtf')?'\\\'e8':'&egrave;');
+    string = string.replace(/È/g, (format==='rtf')?'\\\'c8':'&Egrave;');
+    string = string.replace(/ê/g, (format==='rtf')?'\\\'ea':'&ecirc;');
+    string = string.replace(/Ê/g, (format==='rtf')?'\\\'ca':'&Ecirc;');
+    string = string.replace(/ë/g, (format==='rtf')?'\\\'eb':'&euml;');
+    string = string.replace(/Ë/g, (format==='rtf')?'\\\'cb':'&Euml;');
+    string = string.replace(/í/g, (format==='rtf')?'\\\'ed':'&iacute;');
+    string = string.replace(/Í/g, (format==='rtf')?'\\\'cd':'&Iacute;');
+    string = string.replace(/ì/g, (format==='rtf')?'\\\'ec':'&igrave;');
+    string = string.replace(/Ì/g, (format==='rtf')?'\\\'cc':'&Igrave;');
+    string = string.replace(/î/g, (format==='rtf')?'\\\'ee':'&icirc;');
+    string = string.replace(/Î/g, (format==='rtf')?'\\\'ce':'&Icirc;');
+    string = string.replace(/ï/g, (format==='rtf')?'\\\'ef':'&iuml;');
+    string = string.replace(/Ï/g, (format==='rtf')?'\\\'cf':'&Iuml;');
+    string = string.replace(/ñ/g, (format==='rtf')?'\\\'f1':'&ntilde;');
+    string = string.replace(/Ñ/g, (format==='rtf')?'\\\'d1':'&Ntilde;');
+    string = string.replace(/ó/g, (format==='rtf')?'\\\'f3':'&oacute;');
+    string = string.replace(/Ó/g, (format==='rtf')?'\\\'d3':'&Oacute;');
+    string = string.replace(/ò/g, (format==='rtf')?'\\\'f2':'&ograve;');
+    string = string.replace(/Ò/g, (format==='rtf')?'\\\'d2':'&Ograve;');
+    string = string.replace(/ô/g, (format==='rtf')?'\\\'f4':'&ocirc;');
+    string = string.replace(/Ô/g, (format==='rtf')?'\\\'d4':'&Ocirc;');
+    string = string.replace(/ö/g, (format==='rtf')?'\\\'f6':'&ouml;');
+    string = string.replace(/Ö/g, (format==='rtf')?'\\\'d6':'&Ouml;');
+    string = string.replace(/õ/g, (format==='rtf')?'\\\'f5':'&otilde;');
+    string = string.replace(/Õ/g, (format==='rtf')?'\\\'d5':'&Otilde;');
+    string = string.replace(/ø/g, (format==='rtf')?'\\\'f8':'&oslash;');
+    string = string.replace(/Ø/g, (format==='rtf')?'\\\'d8':'&Oslash;');
+    string = string.replace(/œ/g, (format==='rtf')?'\\\'9c':'&#339;');
+    string = string.replace(/Œ/g, (format==='rtf')?'\\\'8c':'&#338;');
+    string = string.replace(/ß/g, (format==='rtf')?'\\\'df':'&szlig;');
+    string = string.replace(/ú/g, (format==='rtf')?'\\\'fa':'&uacute;');
+    string = string.replace(/Ú/g, (format==='rtf')?'\\\'da':'&Uacute;');
+    string = string.replace(/ù/g, (format==='rtf')?'\\\'f9':'&ugrave;');
+    string = string.replace(/Ù/g, (format==='rtf')?'\\\'d9':'&Ugrave;');
+    string = string.replace(/û/g, (format==='rtf')?'\\\'fb':'&ucirc;');
+    string = string.replace(/Û/g, (format==='rtf')?'\\\'db':'&Ucirc;');
+    string = string.replace(/ü/g, (format==='rtf')?'\\\'fc':'&uuml;');
+    string = string.replace(/Ü/g, (format==='rtf')?'\\\'dc':'&Uuml;');
+    string = string.replace(/ý/g, (format==='rtf')?'\\\'fd':'&yacute;');
+    string = string.replace(/Ý/g, (format==='rtf')?'\\\'dd':'&Yacute;');
+    string = string.replace(/ÿ/g, (format==='rtf')?'\\\'ff':'&yuml;');
+    string = string.replace(/Ÿ/g, (format==='rtf')?'\\\'9f':'&#376;');
+    string = string.replace(/´/g, (format==='rtf')?'\\\'b4':'&acute;');
+    if (format!=='rtf') string = string.replace(/`/g, '&#96;');
     return string;
   },
   isNumber: function(string) {
@@ -145,9 +173,9 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
       columnDelimiter = '\t';
     }
 
-    if (delimiterType === 'comma') {
+    if (delimiterType==='comma') {
       columnDelimiter = ',';
-    } else if (delimiterType === 'tab') {
+    } else if (delimiterType==='tab') {
       columnDelimiter = '\t';
     }
 
@@ -215,7 +243,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     // Test all the rows for proper number of columns.
     for (var i=0, imax=dataArray.length; i<imax; ++i) {
       var numValues = dataArray[i].length;
-      if (numValues !== numColumns) {
+      if (numValues!==numColumns) {
         this.log('Error parsing row ' + i + '. Wrong number of columns.');
       }
     }
