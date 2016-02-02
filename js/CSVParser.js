@@ -249,8 +249,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     }
 
     // Test columns for number data type
-    var numRowsToTest = dataArray.length,
-      threshold = 0.9;
+    var numRowsToTest = dataArray.length;
 
     for (var i=0, imax=headerNames.length; i<imax; ++i) {
       var numStrings = 0,
@@ -275,11 +274,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
       }
 
-      if (numInts/numRowsToTest > threshold || (numStrings===0 && numInts > 0)) {
-        headerTypes[i] = (numFloats===0) ? 'int' : 'float';
-      } else {
-        headerTypes[i] = 'string';
-      }
+      headerTypes[i] = numStrings ? 'string' : ((numFloats===0) ? 'int' : 'float');
     }
 
     return {
