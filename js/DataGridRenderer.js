@@ -223,7 +223,7 @@ var DataGridRenderer = {
       outputText += '{';
       for (var j=0; j<numColumns; ++j) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          var rowOutput = row[j] || 'undefined';
+          var rowOutput = row[j] || '""'; // Save two characters over 'null'
         } else {
           var rowOutput = '"' + (row[j]||'') + '"';
         }
@@ -258,7 +258,7 @@ var DataGridRenderer = {
       outputText += indent + '"' + headerNames[j] + '":[';
       for (var i=0; i<numRows; ++i) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          outputText += dataGrid[i][j] || 'undefined';
+          outputText += dataGrid[i][j] || '""'; // Save two characters over 'null'
         } else {
           outputText += '"' + (dataGrid[i][j]||'') + '"';
         }
@@ -292,7 +292,7 @@ var DataGridRenderer = {
       outputText += indent + '[';
       for (var j=0; j<numColumns; ++j) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          outputText += dataGrid[i][j] || 'undefined';
+          outputText += dataGrid[i][j] || '""'; // Save two characters over 'null'
         } else {
           outputText += '"' + (dataGrid[i][j]||'') + '"';
         }
@@ -322,7 +322,7 @@ var DataGridRenderer = {
       numColumns = headerNames.length,
       _fmtVal = function(i, j) {
         if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          return dataGrid[i][j] || 'undefined';
+          return dataGrid[i][j] || '""'; // Save two characters over 'null'
         } else {
           return '"' + (dataGrid[i][j]||'') + '"';
         }

@@ -138,7 +138,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     return string;
   },
   isNumber: function(string) {
-    return (!(string==='' || isNaN(+string) || /^0\d+/.test(string)));
+    return string!=='' && !(isNaN(string) || /^0\d/.test(string));
   },
   repeat: function(pattern, count) {
     if (count < 1) return '';
@@ -274,7 +274,7 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
 
       }
 
-      headerTypes[i] = numStrings ? 'string' : ((numFloats===0) ? 'int' : 'float');
+      headerTypes[i] = (numStrings || (!numInts && !numFloats)) ? 'string' : ((numFloats===0) ? 'int' : 'float');
     }
 
     return {
