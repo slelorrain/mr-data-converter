@@ -1,11 +1,11 @@
 # Description
 
 Mr. Data Converter takes CSV or tab-delimited data from a spreadsheet such as Excel and converts it into several web-friendly formats, including JSON and XML.
-Use it online here: http://rednox.github.com/mr-data-converter/
+Use it online here: http://thdoan.github.com/mr-data-converter/
 
 ### Modifications to Shan Carter's version
 
-- [Enhancement] added Trac output type
+- [Enhancement] added Trac output type (thanks Rednox)
 - [Enhancement] added C# output type (DataTable)
 - [Enhancement] added ColdFusion output type
 - [Enhancement] added Go output type
