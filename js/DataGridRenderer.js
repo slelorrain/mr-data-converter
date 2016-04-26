@@ -709,6 +709,44 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
+  // Trac Table
+  //---------------------------------------
+
+  trac: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var commentLine = '<!---',  /* pandoc ignores HTML comments with three dashes */
+      commentLineEnd = '--->',
+      outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      headerLengths = [];
+
+    // Begin render loop
+    outputText += '||';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += ' ' + headerNames[j] + ' ||';
+      headerLengths.push((headerNames[j].length+2) + ((headerTypes[j]==='int' || headerTypes[j]==='float')?'r':''));
+    }
+    outputText += newLine + '||';
+    for (var j=0; j<numColumns; ++j) {
+      outputText += ((headerLengths[j].indexOf('r')<0) ? CSVParser.repeat('-', headerLengths[j]) : CSVParser.repeat('-', parseInt(headerLengths[j])-1) + ':') + '||';
+    }
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += newLine + '||';
+      for (var j=0; j<numColumns; ++j) {
+        outputText += ' ' + CSVParser.escapeText(row[j]).replace(/\|/g, '&#124;') + ' ||';
+      }
+    }
+    outputText += newLine;
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
   // Wiki Table
   //---------------------------------------
 
