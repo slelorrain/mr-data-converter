@@ -13,9 +13,7 @@ var DataGridRenderer = {
 
   asp: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '\'',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -48,9 +46,7 @@ var DataGridRenderer = {
 
   csharp: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -85,9 +81,7 @@ var DataGridRenderer = {
 
   cfml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '[',
+    var outputText = '[',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -121,9 +115,7 @@ var DataGridRenderer = {
 
   go: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -163,9 +155,7 @@ var DataGridRenderer = {
 
   html: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -211,9 +201,7 @@ var DataGridRenderer = {
 
   json: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '[',
+    var outputText = '[',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -247,9 +235,7 @@ var DataGridRenderer = {
 
   jsonArrayCols: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '{' + newLine,
+    var outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -281,9 +267,7 @@ var DataGridRenderer = {
 
   jsonArrayRows: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '[' + newLine,
+    var outputText = '[' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -315,9 +299,7 @@ var DataGridRenderer = {
 
   jsonDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '{' + newLine,
+    var outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       _fmtVal = function(i, j) {
@@ -357,9 +339,7 @@ var DataGridRenderer = {
 
   luaDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '--',
-      commentLineEnd = '',
-      outputText = '{' + newLine,
+    var outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       _fmtVal = function(i, j) {
@@ -399,9 +379,7 @@ var DataGridRenderer = {
 
   luaArray: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '--',
-      commentLineEnd = '',
-      outputText = '{' + newLine,
+    var outputText = '{' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -435,9 +413,7 @@ var DataGridRenderer = {
 
   markdown: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!---',  /* pandoc ignores HTML comments with three dashes */
-      commentLineEnd = '--->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       headerLengths = [];
@@ -473,9 +449,7 @@ var DataGridRenderer = {
 
   mysql: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '#',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -530,9 +504,7 @@ var DataGridRenderer = {
 
   perl: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '#',
-      commentLineEnd = '',
-      outputText = '(',
+    var outputText = '(',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -566,9 +538,7 @@ var DataGridRenderer = {
 
   php: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = 'array(' + newLine,
+    var outputText = 'array(' + newLine,
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -602,9 +572,7 @@ var DataGridRenderer = {
 
   python: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '//',
-      commentLineEnd = '',
-      outputText = '[',
+    var outputText = '[',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -638,9 +606,7 @@ var DataGridRenderer = {
 
   rtf: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       rowDefinition = '',
@@ -678,9 +644,7 @@ var DataGridRenderer = {
 
   ruby: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '#',
-      commentLineEnd = '',
-      outputText = '[',
+    var outputText = '[',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -714,9 +678,7 @@ var DataGridRenderer = {
 
   trac: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!---',  /* pandoc ignores HTML comments with three dashes */
-      commentLineEnd = '--->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       headerLengths = [];
@@ -752,9 +714,7 @@ var DataGridRenderer = {
 
   wiki: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -790,9 +750,7 @@ var DataGridRenderer = {
 
   xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -822,9 +780,7 @@ var DataGridRenderer = {
 
   xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -857,9 +813,7 @@ var DataGridRenderer = {
 
   xmlIllustrator: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '<!--',
-      commentLineEnd = '-->',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
 
@@ -911,9 +865,7 @@ var DataGridRenderer = {
 
   yaml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var commentLine = '#',
-      commentLineEnd = '',
-      outputText = '',
+    var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length,
       headerMaxLength = headerNames.sort(function(a, b) {
