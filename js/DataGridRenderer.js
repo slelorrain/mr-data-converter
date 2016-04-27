@@ -680,24 +680,19 @@ var DataGridRenderer = {
     // Inits...
     var outputText = '',
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      headerLengths = [];
+      numColumns = headerNames.length;
 
     // Begin render loop
-    outputText += '||';
+    outputText += '||=';
     for (var j=0; j<numColumns; ++j) {
-      outputText += ' ' + headerNames[j] + ' ||';
-      headerLengths.push((headerNames[j].length+2) + ((headerTypes[j]==='int' || headerTypes[j]==='float')?'r':''));
-    }
-    outputText += newLine + '||';
-    for (var j=0; j<numColumns; ++j) {
-      outputText += ((headerLengths[j].indexOf('r')<0) ? CSVParser.repeat('-', headerLengths[j]) : CSVParser.repeat('-', parseInt(headerLengths[j])-1) + ':') + '||';
+      outputText += ' ' + headerNames[j] + ' =||';
+      if (j < numColumns-1) outputText += '=';
     }
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i];
       outputText += newLine + '||';
       for (var j=0; j<numColumns; ++j) {
-        outputText += ' ' + CSVParser.escapeText(row[j]).replace(/\|/g, '&#124;') + ' ||';
+        outputText += ' ' + CSVParser.escapeText(row[j]).replace(/\|/g, '&#124;') + ((headerTypes[j]==='int' || headerTypes[j]==='float')?'':' ') + '||';
       }
     }
     outputText += newLine;
