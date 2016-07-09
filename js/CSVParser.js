@@ -156,41 +156,28 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   //var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
 
   parse: function(input, headersIncluded, delimiterType, downcaseHeaders, upcaseHeaders, decimalSign) {
-    var dataArray = [],
+    var columnDelimiter,
+      dataArray = [],
       errors = [];
 
     // Test for delimiter
-    // Count the number of commas
-    var RE = new RegExp('[^,]', 'gi'),
-      numCommas = input.replace(RE, '').length;
-    // Count the number of tabs
-    RE = new RegExp('[^\t]', 'gi');
-    var numTabs = input.replace(RE, '').length;
-
-    // Set delimiter
-    var columnDelimiter = ',';
-    if (numTabs > numCommas) {
-      columnDelimiter = '\t';
-    }
-
-    if (delimiterType==='comma') {
-      columnDelimiter = ',';
-    } else if (delimiterType==='tab') {
-      columnDelimiter = '\t';
+    switch (delimiterType) {
+      case 'comma':
+        columnDelimiter = ',';
+        break;
+      case 'tab':
+        columnDelimiter = '\t';
+        break;
+      default:
+        // Give priority to tab
+        columnDelimiter = /\t/.test(input) ? '\t' : ',';
     }
 
     // Kill extra empty lines (if more than one column)
-    if (numCommas > 0 || numTabs > 0) {
-      RE = new RegExp('^' + d.rowDelimiter + '+', 'gi');
-      input = input.replace(RE, '');
-      RE = new RegExp(d.rowDelimiter + '+$', 'gi');
-      input = input.replace(RE, '');
+    if (input.indexOf(columnDelimiter) > -1) {
+      var re = new RegExp('^' + d.rowDelimiter + '+|' + d.rowDelimiter + '+$', 'g');
+      input = input.replace(re, '');
     }
-
-    //var arr = input.split(d.rowDelimiter);
-    //for (var i=0; i<arr.length; i++) {
-    //  dataArray.push(arr[i].split(columnDelimiter));
-    //}
 
     //dataArray = jQuery.csv(columnDelimiter)(input);
     dataArray = this.CSVToArray(input, columnDelimiter);
