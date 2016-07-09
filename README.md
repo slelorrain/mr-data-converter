@@ -41,6 +41,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] text containing single quotes (apostrophes) were not escaped in MySQL output
 - [Fix] data comprising one empty column with header outputs nothing
 - [Fix] wrong output when arriving after hitting Back button
+- [Fix] incorrect delimiter detection when set to Auto in some cases
 
 ### Future plans
 
