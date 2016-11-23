@@ -48,6 +48,9 @@ a[href]: hover {
   opacity: 0.8;
   text-decoration: underline;
 }
+code {
+  font-size: 90%;
+}
 h1 {
   color: #dedede;
   font: bold 44px Cambria, Palatino, serif;

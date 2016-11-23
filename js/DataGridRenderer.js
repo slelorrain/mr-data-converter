@@ -165,7 +165,7 @@ var DataGridRenderer = {
       indent + '<thead>' + newLine +
       indent + indent + '<tr>' + newLine;
     for (var j=0; j<numColumns; ++j) {
-      outputText += indent + indent + indent + '<th class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '">' + headerNames[j] + '</th>' + newLine;
+      outputText += indent + indent + indent + '<th' + (d.includeHtmlClass ? ' class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '"': '') + '>' + headerNames[j] + '</th>' + newLine;
     }
     outputText +=
       indent + indent + '</tr>' + newLine +
@@ -175,13 +175,13 @@ var DataGridRenderer = {
       var row = dataGrid[i],
         rowClassName = '';
       if (i===numRows-1) {
-        rowClassName = ' class="last-row"';
+        rowClassName = d.includeHtmlClass ? ' class="last-row"' : '';
       } else if (i===0) {
-        rowClassName = ' class="first-row"';
+        rowClassName = d.includeHtmlClass ? ' class="first-row"' : '';
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + '<td class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '">' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
+        outputText += indent + indent + indent + '<td' + (d.includeHtmlClass ? ' class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '"' : '') + '>' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
       }
       outputText += indent + indent + '</tr>' + newLine;
     }

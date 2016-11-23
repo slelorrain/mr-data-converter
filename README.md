@@ -21,6 +21,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added "Loading..." status for right panel
 - [Enhancement] added `CSVParser.escapeText()` to convert common punctuation marks, symbols, and diacritics into HTML entities for HTML and XML outputs
 - [Enhancement] added favicons (mobile and desktop)
+- [Enhancement] added HTML class name format option
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
 - [Enhancement] improved formatting for HTML class names
 - [Enhancement] improved indentation for various output types when whitespace is enabled
@@ -42,6 +43,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] data comprising one empty column with header outputs nothing
 - [Fix] wrong output when arriving after hitting Back button
 - [Fix] incorrect delimiter detection when set to Auto in some cases
+- [Fix] incorrect HTML output when first row is not the header
 
 ### Future plans
 

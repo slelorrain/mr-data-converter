@@ -16,6 +16,7 @@ $(document).ready(function() {
     if (evt) ga('send', 'event', 'Settings', evt.currentTarget.id);
 
     d.includeWhiteSpace = $('#includeWhiteSpaceCB').prop('checked');
+    d.includeHtmlClass = $('#includeHtmlClassCB').prop('checked');
 
     if (d.includeWhiteSpace) {
       $('input[name=indentType]').removeAttr('disabled');
