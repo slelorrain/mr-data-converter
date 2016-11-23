@@ -157,20 +157,25 @@ var DataGridRenderer = {
     // Inits...
     var outputText = '',
       numRows = dataGrid.length,
-      numColumns = headerNames.length;
+      numColumns = headerNames.length,
+      _getClass = function(i) {
+        return d.includeHtmlClass ? ' class="cell-' + (d.headersProvided?headerNames[i].replace(/_/g, '-').toLowerCase():'col'+(i+1)) + '"': '';
+      };
 
     // Begin render loop
-    outputText +=
-      '<table>' + newLine +
-      indent + '<thead>' + newLine +
-      indent + indent + '<tr>' + newLine;
-    for (var j=0; j<numColumns; ++j) {
-      outputText += indent + indent + indent + '<th' + (d.includeHtmlClass ? ' class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '"': '') + '>' + headerNames[j] + '</th>' + newLine;
+    outputText += '<table>' + newLine;
+    if (d.headersProvided) {
+      outputText +=
+        indent + '<thead>' + newLine +
+        indent + indent + '<tr>' + newLine;
+      for (var j=0; j<numColumns; ++j) {
+        outputText += indent + indent + indent + '<th' + _getClass(j) + '>' + headerNames[j].replace(/^col(\d)/, '$1') + '</th>' + newLine;
+      }
+      outputText +=
+        indent + indent + '</tr>' + newLine +
+        indent + '</thead>' + newLine;
     }
-    outputText +=
-      indent + indent + '</tr>' + newLine +
-      indent + '</thead>' + newLine +
-      indent + '<tbody>' + newLine;
+    outputText += indent + '<tbody>' + newLine;
     for (var i=0; i<numRows; ++i) {
       var row = dataGrid[i],
         rowClassName = '';
@@ -181,7 +186,7 @@ var DataGridRenderer = {
       }
       outputText += indent + indent + '<tr' + rowClassName + '>' + newLine;
       for (var j=0; j<numColumns; ++j) {
-        outputText += indent + indent + indent + '<td' + (d.includeHtmlClass ? ' class="cell-' + headerNames[j].replace(/_/g, '-').toLowerCase() + '"' : '') + '>' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
+        outputText += indent + indent + indent + '<td' + _getClass(j) + '>' + CSVParser.escapeText(row[j]) + '</td>' + newLine;
       }
       outputText += indent + indent + '</tr>' + newLine;
     }
