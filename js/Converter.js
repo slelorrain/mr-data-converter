@@ -18,7 +18,7 @@ function DataConverter(nodeId) {
   this.inputText         = '';
   this.outputText        = '';
   this.indent            = '  ';
-  this.tableName         = 'MrDataConverter';
+  this.tableName         = 'your_table_name';
   this.headersProvided   = true;
   this.downcaseHeaders   = false;
   this.upcaseHeaders     = false;
