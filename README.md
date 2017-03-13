@@ -25,7 +25,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] overhauled CSS to make layout fluid (no need for 'resize' event handler)
 - [Enhancement] improved formatting for HTML class names
 - [Enhancement] improved indentation for various output types when whitespace is enabled
-- [Enhancement] replaced 'Null' with 'Empty' in ASP / VBScript; replaced 'null' with 'undefined' in JSON
+- [Enhancement] replaced 'Null' with 'Empty' in ASP / VBScript
 - [Enhancement] removed 'useUnderscores' option (unused)
 - [Enhancement] removed ActionScript output type as it was redundant with JSON Properties
 - [Enhancement] compressed images and optimized code
