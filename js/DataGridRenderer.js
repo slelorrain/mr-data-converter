@@ -473,13 +473,13 @@ var DataGridRenderer = {
     }
     outputText +=
       ');' + newLine +
-      'INSERT INTO ' + d.tableName + ' ' + newLine +
+      'INSERT INTO ' + d.tableName + newLine +
       indent + '(';
     for (var j=0; j<numColumns; ++j) {
       outputText += headerNames[j].replace(/\W/g, '');
       if (j < numColumns-1) outputText += ',';
     }
-    outputText += ') ' + newLine + 'VALUES ' + newLine;
+    outputText += ')' + newLine + 'VALUES' + newLine;
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '(';
       for (var j=0; j<numColumns; ++j) {
