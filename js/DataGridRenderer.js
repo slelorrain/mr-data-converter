@@ -483,12 +483,13 @@ var DataGridRenderer = {
     for (var i=0; i<numRows; ++i) {
       outputText += indent + '(';
       for (var j=0; j<numColumns; ++j) {
-        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          outputText += dataGrid[i][j] || 'NULL';
+        var cellValue = dataGrid[i][j];
+        if (headerTypes[j]==='int' || headerTypes[j]==='float' || headerNames[j].slice(-3)==='_id') {
+          outputText += cellValue || 'NULL';
         } else {
-          if (dataGrid[i][j]) dataGrid[i][j] = dataGrid[i][j].replace(/'/g, "''");  // Escape single quotes
-          else dataGrid[i][j] = '';
-          outputText += '\'' + dataGrid[i][j] + '\'';
+          if (cellValue) cellValue = cellValue.replace(/'/g, "''");  // Escape single quotes
+          else cellValue = '';
+          outputText += '\'' + cellValue + '\'';
         }
         if (j < numColumns-1) outputText += ',';
       }
