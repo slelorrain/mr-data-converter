@@ -721,7 +721,7 @@ var DataGridRenderer = {
 
     // Begin render loop
     outputText +=
-      '{| class="wikitable"' + newLine +
+      '{| class="wikitable sortable"' + newLine +
       '! ';
     for (var j=0; j<numColumns; ++j) {
       outputText += 'scope="col" | ' + headerNames[j];
