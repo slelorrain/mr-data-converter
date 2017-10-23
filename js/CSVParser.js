@@ -153,9 +153,8 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
   //---------------------------------------
   // PARSE
   //---------------------------------------
-  //var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders);
 
-  parse: function(input, headersIncluded, delimiterType, downcaseHeaders, upcaseHeaders, decimalSign) {
+  parse: function(input, delimiterType, decimalSign, headersIncluded, safeHeaders, downcaseHeaders, upcaseHeaders) {
     var columnDelimiter,
       dataArray = [],
       errors = [];
@@ -212,17 +211,18 @@ var isDecimalRe = /^\s*(\+|-)?((\d+([,\.]\d+)?)|([,\.]\d+))\s*$/,
     for (var i=headerNames.length-1; i>=0; --i) {
       // Trim leading and trailing spaces
       headerNames[i] = $.trim(headerNames[i]);
-      // Strip non-alphanumeric characters
-      headerNames[i] = headerNames[i].replace(/[^\w -]|&quot;/g, '');
-      // Convert spaces to underscores
-      headerNames[i] = headerNames[i].replace(/ +/g, '_');
-      // To be safe, prefix columns with leading digits
-      if (/^[^a-z]/i.test(headerNames[i])) headerNames[i] = 'col' + headerNames[i];
+      if (safeHeaders) {
+        // Strip non-alphanumeric characters
+        headerNames[i] = headerNames[i].replace(/[^\w -]|&quot;/g, '');
+        // Convert spaces to underscores
+        headerNames[i] = headerNames[i].replace(/ +/g, '_');
+        // To be safe, prefix columns with leading digits
+        if (/^[^a-z]/i.test(headerNames[i])) headerNames[i] = 'col' + headerNames[i];
+      }
       // Convert case?
       if (upcaseHeaders) {
         headerNames[i] = headerNames[i].toUpperCase();
-      }
-      if (downcaseHeaders) {
+      } else if (downcaseHeaders) {
         headerNames[i] = headerNames[i].toLowerCase();
       }
     }

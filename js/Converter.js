@@ -20,6 +20,7 @@ function DataConverter(nodeId) {
   this.indent            = '  ';
   this.tableName         = 'your_table_name';
   this.headersProvided   = true;
+  this.safeHeaders       = true;
   this.downcaseHeaders   = false;
   this.upcaseHeaders     = false;
   this.includeWhiteSpace = true;
@@ -106,7 +107,7 @@ DataConverter.prototype.convert = function() {
     }
 
     CSVParser.resetLog();
-    var parseOutput = CSVParser.parse(this.inputText, this.headersProvided, this.delimiter, this.downcaseHeaders, this.upcaseHeaders, this.decimal),
+    var parseOutput = CSVParser.parse(this.inputText, this.delimiter, this.decimal, this.headersProvided, this.safeHeaders, this.downcaseHeaders, this.upcaseHeaders),
       dataGrid = parseOutput.dataGrid,
       headerNames = parseOutput.headerNames,
       headerTypes = parseOutput.headerTypes,

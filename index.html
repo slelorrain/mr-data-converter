@@ -55,7 +55,12 @@
         <p>
           <label><input type="checkbox" id="headersProvidedCB" class="settings-element" checked> First row is the header</label>
         </p>
-        <div class="settings-group">
+        <div id="headerGroup" class="settings-group">
+          <p>
+            Safe header names:
+            <label><input type="radio" id="headersSafe" name="headerType" value="safe" class="settings-element" checked> Yes</label>
+            <label><input type="radio" id="headersUnsafe" name="headerType" value="unsafe" class="settings-element"> No</label>
+          </p>
           <p>
             Transform:
             <label><input type="radio" id="headersNoTransform" name="headerModifications" value="none" class="settings-element" checked> None</label>
@@ -66,7 +71,7 @@
         <p>
           <label><input type="checkbox" id="includeWhiteSpaceCB" class="settings-element" checked> Include white space in output</label>
         </p>
-        <div class="settings-group">
+        <div id="indentGroup" class="settings-group">
           <p>
             Indent with:
             <label><input type="radio" id="includeWhiteSpaceSpaces" name="indentType" value="spaces" class="settings-element" checked> Spaces</label>

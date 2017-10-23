@@ -5,6 +5,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 ### Modifications to Shan Carter's version
 
+- [Enhancement] added safe header names option
 - [Enhancement] added Trac output type (thanks Rednox)
 - [Enhancement] added C# output type (DataTable)
 - [Enhancement] added ColdFusion output type
