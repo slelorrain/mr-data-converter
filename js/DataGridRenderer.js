@@ -201,40 +201,6 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
-  // JSON Properties
-  //---------------------------------------
-
-  json: function(dataGrid, headerNames, headerTypes, indent, newLine) {
-    // Inits...
-    var outputText = '[',
-      numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    // Begin render loop
-    for (var i=0; i<numRows; ++i) {
-      var row = dataGrid[i];
-      outputText += '{';
-      for (var j=0; j<numColumns; ++j) {
-        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          var rowOutput = row[j] || 'null';
-        } else {
-          var rowOutput = '"' + (row[j]||'') + '"';
-        }
-        outputText += '"' + headerNames[j] + '":' + rowOutput;
-        if (j < numColumns-1) outputText += ',';
-      }
-      outputText += '}';
-      if (i < numRows-1) outputText += ',' + newLine;
-    }
-    outputText += ']' + newLine;
-
-    // Format data
-    outputText = outputText.replace(/&quot;/g, '\\"');
-
-    return outputText;
-  },
-
-  //---------------------------------------
   // JSON Array of Columns
   //---------------------------------------
 
@@ -339,38 +305,32 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
-  // Lua Table as Dictionary
+  // JSON Properties
   //---------------------------------------
 
-  luaDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+  json: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
-    var outputText = '{' + newLine,
+    var outputText = '[',
       numRows = dataGrid.length,
-      numColumns = headerNames.length,
-      _fmtVal = function(i, j) {
-        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
-          return dataGrid[i][j] || 'nil';
-        } else {
-          return '"' + (dataGrid[i][j]||'') + '"';
-        }
-      };
+      numColumns = headerNames.length;
 
     // Begin render loop
     for (var i=0; i<numRows; ++i) {
-      outputText += indent + '["' + dataGrid[i][0] + '"]=';
-      if (numColumns===2) {
-        outputText += _fmtVal(i, 1);
-      } else {
-        outputText += '{';
-        for (var j=1; j<numColumns; ++j) {
-          if (j > 1) outputText += ',';
-          outputText += '["' + headerNames[j] + '"]=' + _fmtVal(i, j);
+      var row = dataGrid[i];
+      outputText += '{';
+      for (var j=0; j<numColumns; ++j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          var rowOutput = row[j] || 'null';
+        } else {
+          var rowOutput = '"' + (row[j]||'') + '"';
         }
-        outputText += '}';
+        outputText += '"' + headerNames[j] + '":' + rowOutput;
+        if (j < numColumns-1) outputText += ',';
       }
+      outputText += '}';
       if (i < numRows-1) outputText += ',' + newLine;
     }
-    outputText += newLine + '}' + newLine;
+    outputText += ']' + newLine;
 
     // Format data
     outputText = outputText.replace(/&quot;/g, '\\"');
@@ -402,6 +362,46 @@ var DataGridRenderer = {
         if (j < numColumns-1) outputText += ',';
       }
       outputText += '}';
+      if (i < numRows-1) outputText += ',' + newLine;
+    }
+    outputText += newLine + '}' + newLine;
+
+    // Format data
+    outputText = outputText.replace(/&quot;/g, '\\"');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // Lua Table as Dictionary
+  //---------------------------------------
+
+  luaDict: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var outputText = '{' + newLine,
+      numRows = dataGrid.length,
+      numColumns = headerNames.length,
+      _fmtVal = function(i, j) {
+        if (headerTypes[j]==='int' || headerTypes[j]==='float') {
+          return dataGrid[i][j] || 'nil';
+        } else {
+          return '"' + (dataGrid[i][j]||'') + '"';
+        }
+      };
+
+    // Begin render loop
+    for (var i=0; i<numRows; ++i) {
+      outputText += indent + '["' + dataGrid[i][0] + '"]=';
+      if (numColumns===2) {
+        outputText += _fmtVal(i, 1);
+      } else {
+        outputText += '{';
+        for (var j=1; j<numColumns; ++j) {
+          if (j > 1) outputText += ',';
+          outputText += '["' + headerNames[j] + '"]=' + _fmtVal(i, j);
+        }
+        outputText += '}';
+      }
       if (i < numRows-1) outputText += ',' + newLine;
     }
     outputText += newLine + '}' + newLine;
@@ -746,69 +746,6 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
-  // XML Properties
-  //---------------------------------------
-
-  xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
-    // Inits...
-    var outputText = '',
-      numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    // Begin render loop
-    outputText +=
-      '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
-      '<rows>' + newLine;
-    for (var i=0; i<numRows; ++i) {
-      var row = dataGrid[i];
-      outputText += indent + '<row ';
-      for (var j=0; j<numColumns; ++j) {
-        outputText += headerNames[j] + '="' + CSVParser.escapeText(row[j], 'xml') + '" ';
-      }
-      outputText += '/>' + newLine;
-    }
-    outputText += '</rows>' + newLine;
-
-    // Format data
-    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
-
-    return outputText;
-  },
-
-  //---------------------------------------
-  // XML Nodes
-  //---------------------------------------
-
-  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
-    // Inits...
-    var outputText = '',
-      numRows = dataGrid.length,
-      numColumns = headerNames.length;
-
-    // Begin render loop
-    outputText +=
-      '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
-      '<rows>' + newLine;
-    for (var i=0; i<numRows; ++i) {
-      var row = dataGrid[i];
-      outputText += indent + '<row>' + newLine;
-      for (var j=0; j<numColumns; ++j) {
-        if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
-        else row[j] = '';
-        headerNames[j] = headerNames[j].replace(/\W/g, '');
-        outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
-      }
-      outputText += indent + '</row>' + newLine;
-    }
-    outputText += '</rows>' + newLine;
-
-    // Format data
-    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
-
-    return outputText;
-  },
-
-  //---------------------------------------
   // XML Illustrator
   //---------------------------------------
 
@@ -853,6 +790,69 @@ var DataGridRenderer = {
       indent + indent + '</variableSet>' + newLine +
       indent + '</variableSets>' + newLine +
       '</svg>' + newLine;
+
+    // Format data
+    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // XML Nodes
+  //---------------------------------------
+
+  xml: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    outputText +=
+      '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
+      '<rows>' + newLine;
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += indent + '<row>' + newLine;
+      for (var j=0; j<numColumns; ++j) {
+        if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
+        else row[j] = '';
+        headerNames[j] = headerNames[j].replace(/\W/g, '');
+        outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
+      }
+      outputText += indent + '</row>' + newLine;
+    }
+    outputText += '</rows>' + newLine;
+
+    // Format data
+    outputText = outputText.replace(/&amp;quot;/g, '&quot;');
+
+    return outputText;
+  },
+
+  //---------------------------------------
+  // XML Properties
+  //---------------------------------------
+
+  xmlProperties: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Begin render loop
+    outputText +=
+      '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
+      '<rows>' + newLine;
+    for (var i=0; i<numRows; ++i) {
+      var row = dataGrid[i];
+      outputText += indent + '<row ';
+      for (var j=0; j<numColumns; ++j) {
+        outputText += headerNames[j] + '="' + CSVParser.escapeText(row[j], 'xml') + '" ';
+      }
+      outputText += '/>' + newLine;
+    }
+    outputText += '</rows>' + newLine;
 
     // Format data
     outputText = outputText.replace(/&amp;quot;/g, '&quot;');
