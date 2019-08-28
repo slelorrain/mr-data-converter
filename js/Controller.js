@@ -42,7 +42,7 @@ $(document).ready(function() {
     if (savedSettings) {
       for (var i in savedSettings) {
         if (i==='outputDataType') {
-          $('#data-selector').val(savedSettings[i]);
+          $('#data-selector').val(savedSettings[i]).change();
         } else {
           if (typeof savedSettings[i]==='boolean') settings[i].checked = savedSettings[i];
           else settings[i].value = savedSettings[i];
