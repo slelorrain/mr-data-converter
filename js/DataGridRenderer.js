@@ -861,6 +861,50 @@ var DataGridRenderer = {
   },
 
   //---------------------------------------
+  // XML Smart Logic
+  //---------------------------------------
+
+  xmlSmart: function(dataGrid, headerNames, headerTypes, indent, newLine) {
+    // Inits...
+    var outputText = '',
+      numRows = dataGrid.length,
+      numColumns = headerNames.length;
+
+    // Try to be smart
+    if (headerNames[0].indexOf('|')>-1) {
+      // col1[0] = row node name
+      // col1[1] = row attribute
+      var col1 = headerNames[0].split('|');
+
+      // Begin render loop
+      outputText +=
+        '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
+        '<data>' + newLine;
+      for (var i=0; i<numRows; ++i) {
+        var row = dataGrid[i];
+        outputText += indent + '<' + col1[0] + ' ' + (col1[1]||'value') + '="' + row[0] + '">' + newLine;
+        for (var j=1; j<numColumns; ++j) {
+          if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
+          else row[j] = '';
+          headerNames[j] = headerNames[j].replace(/\W/g, '');
+          outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
+        }
+        outputText += indent + '</' + col1[0] + '>' + newLine;
+      }
+      outputText += '</data>' + newLine;
+
+      // Format data
+      outputText = outputText.replace(/&amp;quot;/g, '&quot;');
+
+      return outputText;
+
+    // If not, fall back to XML Nodes
+    } else {
+      return this.xml(dataGrid, headerNames, headerTypes, indent, newLine);
+    }
+  },
+
+  //---------------------------------------
   // YAML
   //---------------------------------------
 

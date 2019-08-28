@@ -37,6 +37,7 @@ DataConverter.prototype.init = function() {
   this.inputTextArea = $('#data-input');
   this.outputTextArea = $('#data-output');
   this.dataSelector = $('#data-selector');
+  this.outputNotes = $('#output-notes');
 
   // Show loader (based on http://projects.lukehaas.me/css-loaders/)
   $('#converter > .wrapper').append(
@@ -83,6 +84,12 @@ DataConverter.prototype.init = function() {
 
   this.dataSelector.change(function() {
     self.outputDataType = $(this).val();
+    if (self.outputDataType==='xmlSmart') {
+      self.outputNotes.text('This format requires safe header names to be disabled.');
+      $('#headersUnsafe').click();
+    } else {
+      self.outputNotes.text('');
+    }
     self.convert();
     self.outputTextArea.select();
   });

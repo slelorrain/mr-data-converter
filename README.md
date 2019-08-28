@@ -15,6 +15,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Enhancement] added Perl output type
 - [Enhancement] added Rich Text Format (RTF) output type
 - [Enhancement] added Wiki output type
+- [Enhancement] added XML - Smart output type
 - [Enhancement] added YAML output type
 - [Enhancement] added auto-select on input focus
 - [Enhancement] added input auto-focus on page load
