@@ -92,6 +92,7 @@ DataConverter.prototype.init = function() {
     }
     self.convert();
     self.outputTextArea.select();
+    saveSettings();
   });
 
   // Done! Clean up

@@ -2,12 +2,52 @@
  * Controller.js
  */
 
-var d;
+var d, settings;
+
+function saveSettings() {
+  var currentSettings = {};
+  for (var i=0; i<settings.length; ++i) {
+    var field = settings[i],
+      key = field.name || field.id;
+    switch (field.type) {
+      case 'checkbox':
+        currentSettings[key] = field.checked;
+        break;
+      case 'radio':
+        if (field.checked) currentSettings[key] = field.value;
+        break;
+      default:
+        currentSettings[key] = field.value;
+    }
+  }
+  currentSettings['outputDataType'] = $('#data-selector').val();
+  localStorage['settings'] = JSON.stringify(currentSettings);
+}
 
 $(document).ready(function() {
   d = new DataConverter('converter');
 
   d.init();
+
+  settings = $('#settings-form')[0];
+
+  // Load saved settings?
+  if (localStorage['settings']) {
+    var savedSettings;
+    try {
+      savedSettings = JSON.parse(localStorage['settings']);
+    } catch(err) {}
+    if (savedSettings) {
+      for (var i in savedSettings) {
+        if (i==='outputDataType') {
+          $('#data-selector').val(savedSettings[i]);
+        } else {
+          if (typeof savedSettings[i]==='boolean') settings[i].checked = savedSettings[i];
+          else settings[i].value = savedSettings[i];
+        }
+      }
+    }
+  }
 
   $('.settings-element').change(updateSettings);
 
@@ -58,6 +98,8 @@ $(document).ready(function() {
     d.includeHtmlClass = $('#includeHtmlClassCB').prop('checked');
 
     d.convert();
+
+    saveSettings();
   }
 
   updateSettings();
