@@ -10,6 +10,8 @@ function saveSettings() {
     var field = settings[i],
       key = field.name || field.id;
     switch (field.type) {
+      case 'button': // Skip
+        continue;
       case 'checkbox':
         currentSettings[key] = field.checked;
         break;
@@ -50,6 +52,14 @@ $(document).ready(function() {
   }
 
   $('.settings-element').change(updateSettings);
+
+  $('#restore').click(restoreDefaults);
+
+  function restoreDefaults(evt) {
+    if (evt) ga('send', 'event', 'Restore Defaults', evt.currentTarget.id);
+    localStorage.clear();
+    location.reload();
+  }
 
   function updateSettings(evt) {
 
