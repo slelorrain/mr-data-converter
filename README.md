@@ -47,34 +47,60 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] wrong output when arriving after hitting Back button
 - [Fix] incorrect delimiter detection when set to Auto in some cases
 - [Fix] incorrect HTML output when first row is not the header
+- [Enhancement] new formatting options for XML - Smart output type
 
 ### XML - Smart
 
 This output type gives you additional flexibility on how to structure the XML by modifying the column headers.
 
-#### name[attribute]
+#### Custom row nodes - name[attribute]
 
 Input:
 ```
 product[product-id]	ean	upc
-N6907603	1200102146463	192371146460
-N6907903	1200102146470	192371146477
+P6907603	1200102146463	192371146460
+P6907903	1200102146470	192371146477
 ```
 
 Output:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-<rows>
-  <product product-id="N6907603">
+<products>
+  <product product-id="P6907603">
     <ean>1200102146463</ean>
     <upc>192371146460</upc>
   </product>
-  <product product-id="N6907903">
+  <product product-id="P6907903">
     <ean>1200102146470</ean>
     <upc>192371146477</upc>
   </product>
-</rows>
+</products>
 ```
+
+**NOTE:** The modification above only works in the first column.
+
+#### Custom row item container nodes - name[attribute="value"]
+
+Input:
+```
+product[product-id]	custom-attribute[attribute-id="color"]	custom-attribute[attribute-id="size"]
+P6907603	Black	XS
+```
+
+Output:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product product-id="P6907603">
+    <custom-attributes>
+      <custom-attribute attribute-id="color">Black</custom-attribute>
+      <custom-attribute attribute-id="size">XS</custom-attribute>
+    </custom-attributes>
+  </product>
+</products>
+```
+
+**NOTE:** The modification above only works in the second and subsequent columns.
 
 ### Future plans
 

@@ -871,27 +871,45 @@ var DataGridRenderer = {
       numColumns = headerNames.length;
 
     // Try to be smart
-    var match = headerNames[0].match(/^(.+?)\[(.+?)\]$/);
-    if (match) {
-      var rowNodeName = match[1],
-        rowAttribute = match[2];
+    var rowMatch = headerNames[0].match(/^([\w:.-]+?)\[([\w:.-]*?)\]$/);
+    if (rowMatch) {
+      var rowNodeName = rowMatch[1],
+        rowAttribute = rowMatch[2];
 
       // Begin render loop
       outputText +=
         '<?xml version="1.0" encoding="UTF-8"?>' + newLine +
-        '<rows>' + newLine;
+        '<' + rowNodeName + 's>' + newLine;
       for (var i=0; i<numRows; ++i) {
-        var row = dataGrid[i];
-        outputText += indent + '<' + rowNodeName + ' ' + (rowAttribute||'value') + '="' + row[0] + '">' + newLine;
+        var row = dataGrid[i],
+          itemNodeName,
+          itemAttribute,
+          reItemsOpen,
+          reItemsClose;
+        outputText += indent + '<' + rowNodeName + ' ' + (rowAttribute||rowNodeName+'-id') + '="' + row[0] + '">' + newLine;
         for (var j=1; j<numColumns; ++j) {
           if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
           else row[j] = '';
-          headerNames[j] = headerNames[j].replace(/\W/g, '');
-          outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
+          var itemMatch = headerNames[j].match(/^([\w:.-]+?)\[([\w&=:;".-]+?)\]$/);
+          if (itemMatch) {
+            itemNodeName = itemMatch[1];
+            itemAttribute = itemMatch[2].replace(/&quot;/g, '"');
+            reItemsOpen = new RegExp('<' + itemNodeName + 's>');
+            reItemsClose = new RegExp('<\\/' + itemNodeName + 's>');
+            if (reItemsOpen && !reItemsOpen.test(outputText)) outputText += indent + indent + '<' + itemNodeName + 's>' + newLine;
+            outputText += indent + indent + indent + '<' + itemNodeName + ' ' + itemAttribute + '>' + row[j] + '</' + itemNodeName + '>' + newLine;
+          } else {
+            if (reItemsOpen && reItemsOpen.test(outputText)) {
+              outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
+            }
+            headerNames[j] = headerNames[j].replace(/\W/g, '');
+            outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
+          }
         }
+        if (reItemsClose && !reItemsClose.test(outputText)) outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
         outputText += indent + '</' + rowNodeName + '>' + newLine;
       }
-      outputText += '</rows>' + newLine;
+      outputText += '</' + rowNodeName + 's>' + newLine;
 
       // Format data
       outputText = outputText.replace(/&amp;quot;/g, '&quot;');
