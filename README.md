@@ -53,7 +53,7 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 
 This output type gives you additional flexibility on how to structure the XML by modifying the column headers.
 
-#### Custom row nodes - name[attribute]
+#### Custom row nodes - node[attribute]
 
 Input:
 ```
@@ -79,7 +79,7 @@ Output:
 
 **NOTE:** The modification above only works in the first column.
 
-#### Custom row item container nodes - name[attribute="value"]
+#### Custom row item container nodes - node[attribute="value"]
 
 Input:
 ```
