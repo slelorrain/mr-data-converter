@@ -48,6 +48,34 @@ Use it online here: http://thdoan.github.com/mr-data-converter/
 - [Fix] incorrect delimiter detection when set to Auto in some cases
 - [Fix] incorrect HTML output when first row is not the header
 
+### XML - Smart
+
+This output type gives you additional flexibility on how to structure the XML by modifying the column headers.
+
+#### name[attribute]
+
+Input:
+```
+product[product-id]	ean	upc
+N6907603	1200102146463	192371146460
+N6907903	1200102146470	192371146477
+```
+
+Output:
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<rows>
+  <product product-id="N6907603">
+    <ean>1200102146463</ean>
+    <upc>192371146460</upc>
+  </product>
+  <product product-id="N6907903">
+    <ean>1200102146470</ean>
+    <upc>192371146477</upc>
+  </product>
+</rows>
+```
+
 ### Future plans
 
 - Add more output types
