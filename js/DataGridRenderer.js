@@ -884,8 +884,7 @@ var DataGridRenderer = {
         var row = dataGrid[i],
           itemNodeName,
           itemAttribute,
-          reItemsOpen,
-          reItemsClose;
+          itemsOpen = false;
         outputText += indent + '<' + rowNodeName + ' ' + (rowAttribute||rowNodeName+'-id') + '="' + row[0] + '">' + newLine;
         for (var j=1; j<numColumns; ++j) {
           if (row[j]) row[j] = CSVParser.escapeText(row[j], 'xml');  // Convert to HTML entities
@@ -894,19 +893,24 @@ var DataGridRenderer = {
           if (itemMatch) {
             itemNodeName = itemMatch[1];
             itemAttribute = itemMatch[2].replace(/&quot;/g, '"');
-            reItemsOpen = new RegExp('<' + itemNodeName + 's>');
-            reItemsClose = new RegExp('<\\/' + itemNodeName + 's>');
-            if (reItemsOpen && !reItemsOpen.test(outputText)) outputText += indent + indent + '<' + itemNodeName + 's>' + newLine;
+            if (!itemsOpen) {
+              outputText += indent + indent + '<' + itemNodeName + 's>' + newLine;
+              itemsOpen = true;
+            }
             outputText += indent + indent + indent + '<' + itemNodeName + ' ' + itemAttribute + '>' + row[j] + '</' + itemNodeName + '>' + newLine;
           } else {
-            if (reItemsOpen && reItemsOpen.test(outputText)) {
+            if (itemsOpen) {
               outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
+              itemsOpen = false;
             }
             headerNames[j] = headerNames[j].replace(/\W/g, '');
             outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
           }
         }
-        if (reItemsClose && !reItemsClose.test(outputText)) outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
+        if (itemsOpen) {
+          outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
+          itemsOpen = false;
+        }
         outputText += indent + '</' + rowNodeName + '>' + newLine;
       }
       outputText += '</' + rowNodeName + 's>' + newLine;
