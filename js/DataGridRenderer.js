@@ -866,6 +866,7 @@ var DataGridRenderer = {
 
   xmlSmart: function(dataGrid, headerNames, headerTypes, indent, newLine) {
     // Inits...
+    console.log(headerNames);
     var outputText = '',
       numRows = dataGrid.length,
       numColumns = headerNames.length;
@@ -903,7 +904,8 @@ var DataGridRenderer = {
               outputText += indent + indent + '</' + itemNodeName + 's>' + newLine;
               itemsOpen = false;
             }
-            headerNames[j] = headerNames[j].replace(/\W/g, '');
+            headerNames[j] = headerNames[j].replace(/[^\w:.-]/g, '');
+            console.log(headerNames[j]);
             outputText += indent + indent + '<' + headerNames[j] + '>' + row[j] + '</' + headerNames[j] + '>' + newLine;
           }
         }
